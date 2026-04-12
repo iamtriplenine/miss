@@ -230,8 +230,9 @@ body::after {
 
 <div class="hero">
     <svg class="crown-svg"><use xlink:href="#icon-crown"></use></svg>
-    <p class="hero-label">Concours Officiel 2025</p>
-    <h1>Miss <em>Beauté</em></h1>
+    <p class="hero-label">Concours Officiel 2026</p>
+    <h1>Queen <em>Beauty</em></h1>
+    <h1>1st edition</h1>
     <p class="hero-sub" style="color: var(--muted); max-width: 500px; margin: 15px auto; font-size: 14px; line-height: 1.6;">L'élégance est la seule beauté qui ne se fane jamais. Soutenez votre favorite vers le trône.</p>
     <div class="gold-line"></div>
     <div class="vote-info glass-btn">
@@ -243,7 +244,7 @@ body::after {
 
 <div class="controls">
     <div class="search-wrap">
-        <input type="text" id="search" placeholder="Rechercher l'excellence..." oninput="filtrer()">
+        <input type="text" id="search" placeholder="Recherche..." oninput="filtrer()">
         <span class="icon"><svg class="icon-svg"><use xlink:href="#icon-search"></use></svg></span>
     </div>
 </div>
@@ -312,7 +313,7 @@ async function chargerCandidates() {
 
 function renderGrid(list) {
     const sorted = [...list].sort((a, b) => b.votes - a.votes);
-    document.getElementById('grid-count').textContent = `${sorted.length} CANDIDATES EN LICE`;
+    document.getElementById('grid-count').textContent = `${sorted.length} CANDIDATES `;
 
     document.getElementById('grid').innerHTML = sorted.map((c, i) => `
         <div class="card" style="animation: fadeUp 0.6s ease forwards ${i * 0.1}s; opacity:0;">
