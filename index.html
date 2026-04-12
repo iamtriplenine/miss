@@ -191,9 +191,16 @@ body::after {
     font-weight: bold; color: black; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
 }
 
+/* NOUVEAU CODE : 2 CANDIDATS PAR LIGNE SUR MOBILE */
 @media (max-width: 600px) {
-    .grid { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 50px; }
+    .grid { 
+        grid-template-columns: repeat(2, 1fr); /* Force 2 colonnes */
+        gap: 12px; /* Réduit l'espace entre les cartes pour gagner de la place */
+    }
+    .hero h1 { font-size: 42px; } /* Ajuste le titre pour mobile */
+    .card-body { padding: 12px; } /* Réduit les marges internes des cartes */
+    .card-name { font-size: 18px; } /* Rend le nom plus petit pour éviter les retours à la ligne */
+    .btn-vote { padding: 8px 12px; font-size: 11px; } /* Ajuste le bouton */
 }
     </style>
 </head>
