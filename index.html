@@ -191,7 +191,116 @@ body::after {
     font-weight: bold; color: black; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
 }
 
-/* NOUVEAU CODE : 2 CANDIDATS PAR LIGNE SUR MOBILE */
+/* ===== SÉCURITÉ TRANSACTION ===== */
+.field-txn-wrap { position: relative; margin-bottom: 6px; }
+.field-txn-wrap .field { margin-bottom: 0; padding-right: 46px; transition: border-color 0.25s, box-shadow 0.25s; }
+.field-txn-wrap .field.valid   { border-color: #34d399 !important; box-shadow: 0 0 0 3px rgba(52,211,153,0.12); }
+.field-txn-wrap .field.invalid { border-color: #f87171 !important; box-shadow: 0 0 0 3px rgba(248,113,113,0.12); }
+.field-txn-icon {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    display: none; width: 20px; height: 20px;
+}
+.field-txn-icon.show { display: block; }
+.txn-feedback {
+    font-size: 11px; font-weight: 500; line-height: 1.5;
+    padding: 8px 12px; border-radius: 10px; margin-top: 7px; margin-bottom: 14px;
+    display: none;
+}
+.txn-feedback.show { display: block; }
+.txn-feedback.err  { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #fca5a5; }
+.txn-feedback.ok   { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25); color: #6ee7b7; }
+.txn-feedback.warn { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.3); color: #fcd34d; }
+
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%,60%  { transform: translateX(-5px); }
+    40%,80%  { transform: translateX(5px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/* ===== BOUTON FLOTTANT WHATSAPP ===== */
+.wa-float {
+    position: fixed;
+    bottom: 28px;
+    left: 28px; /* à gauche pour ne pas gêner les toasts à droite */
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.wa-bubble {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(37,211,102,0.18) 0%, rgba(18,140,64,0.12) 100%);
+    border: 1px solid rgba(37,211,102,0.45);
+    backdrop-filter: blur(16px) saturate(1.6);
+    -webkit-backdrop-filter: blur(16px) saturate(1.6);
+    display: flex; align-items: center; justify-content: center;
+    color: #4ade80;
+    box-shadow: 0 4px 24px rgba(37,211,102,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+    transition: all 0.28s cubic-bezier(.2,.8,.3,1);
+    position: relative;
+    flex-shrink: 0;
+}
+.wa-bubble::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 55%);
+}
+
+/* Pastille "aide" animée */
+.wa-dot {
+    position: absolute; top: 3px; right: 3px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: #34d399;
+    border: 2px solid #0a0a0a;
+    animation: waPulse 2.2s ease-in-out infinite;
+}
+@keyframes waPulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
+    50%      { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+}
+
+/* Étiquette texte qui apparaît au hover */
+.wa-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    background: linear-gradient(135deg, rgba(18,18,18,0.95) 0%, rgba(10,10,10,0.9) 100%);
+    border: 1px solid rgba(37,211,102,0.3);
+    border-left: none;
+    border-radius: 0 50px 50px 0;
+    padding: 0;
+    font-size: 12px; font-weight: 600;
+    color: #4ade80;
+    transition: max-width 0.35s cubic-bezier(.2,.8,.3,1), padding 0.35s;
+    backdrop-filter: blur(12px);
+    margin-left: -10px;
+    padding-left: 0;
+    line-height: 52px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+.wa-float:hover .wa-label {
+    max-width: 200px;
+    padding: 0 18px 0 18px;
+}
+.wa-float:hover .wa-bubble {
+    background: linear-gradient(135deg, rgba(37,211,102,0.28) 0%, rgba(18,140,64,0.2) 100%);
+    border-color: rgba(37,211,102,0.7);
+    box-shadow: 0 8px 32px rgba(37,211,102,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    transform: scale(1.06);
+}
+
+@media (max-width: 600px) {
+    .wa-float { bottom: 20px; left: 16px; }
+    .wa-bubble { width: 46px; height: 46px; }
+}
+
+/* ===== FIN WHATSAPP ===== */
 @media (max-width: 600px) {
     .grid { 
         grid-template-columns: repeat(2, 1fr); /* Force 2 colonnes */
@@ -204,7 +313,7 @@ body::after {
 }
 
 
-    /* Désactiver l'affichage des boutons de vote */
+ /* Désactiver l'affichage des boutons de vote */
 .btn-vote {
     display: none !important;
 } 
@@ -213,6 +322,7 @@ body::after {
 .vote-info {
     display: none !important;
 } 
+
     </style>
 </head>
 <body>
@@ -277,17 +387,35 @@ body::after {
     </div>
 </div>
 
- <div class="overlay" id="modal-vote">
+<div class="overlay" id="modal-vote">
     <div class="modal">
         <div id="modal-vote-content"></div>
     </div>
 </div>
 
+<!-- ===== BOUTON FLOTTANT WHATSAPP ===== -->
+<!-- Remplace XXXXXXXXXXX par ton numéro WhatsApp avec indicatif pays, ex: 2250700000000 -->
+<a class="wa-float"
+   href="https://wa.me/2250576754871?text=Bonjour%2C%20j'ai%20besoin%20d'aide%20pour%20voter%20sur%20le%20concours%20Miss%20Beauté."
+   target="_blank"
+   rel="noopener"
+   title="Besoin d'aide ? Contactez-nous sur WhatsApp">
+    <div class="wa-bubble">
+        <!-- Icône WhatsApp officielle SVG -->
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="wa-dot"></span>
+    </div>
+    <span class="wa-label">Besoin d'aide ?</span>
+</a>
+
 <div class="toast-container" id="toasts" style="position:fixed; bottom:20px; right:20px; z-index:5000;"></div>
 
 <script>
-    
-// CONFIG & STATE (Inchangé pour garder la connexion backend)
+// ==========================================
+// CONFIG & STATE
+// ==========================================
 const API       = "https://backend-xxgf.onrender.com";
 const WAVE_LINK = "https://pay.wave.com/m/M_ci_zuXWh0fj9YGV/c/ci/";
 
@@ -295,7 +423,154 @@ let allCandidates = [];
 let currentVoter  = null;
 let targetCand    = null;
 
+// ==========================================
+// SÉCURITÉ — VALIDATION DES IDs DE TRANSACTION
+// ==========================================
+
+// Format attendu : une lettre, un underscore, puis 10+ caractères alphanumériques
+// Avec tolérance d'un tiret optionnel entre le 4e et 6e caractère après l'underscore
+// Exemples valides :
+//   T_R5553BC34EDGXUZF        (sans tiret)
+//   T_URZJC-BEKF2RXRY4H      (avec tiret entre pos 4-6)
+//   T_URZ JC-BEKF2RXRY4H     (espaces tolérés, nettoyés automatiquement)
+const TXN_REGEX = /^[A-Za-z]_[A-Za-z0-9]{3,6}-?[A-Za-z0-9]{6,}$/;
+
+// Clé localStorage pour stocker les IDs déjà utilisés
+const USED_TXN_KEY = 'miss_used_txn_ids';
+
+function getUsedTxnIds() {
+    try { return JSON.parse(localStorage.getItem(USED_TXN_KEY) || '[]'); }
+    catch { return []; }
+}
+
+function saveUsedTxnId(id) {
+    const ids = getUsedTxnIds();
+    if (!ids.includes(id)) {
+        ids.push(id);
+        // Garder max 200 entrées pour ne pas surcharger le localStorage
+        if (ids.length > 200) ids.splice(0, ids.length - 200);
+        localStorage.setItem(USED_TXN_KEY, JSON.stringify(ids));
+    }
+}
+
+/**
+ * Comptage de caractères en même position (similarité positionnelle)
+ * Ex: "T_R5553BC34EDGXUZF" vs "T_R5553BC34EDGXUZA" → 17 correspondances
+ */
+function countPositionalMatches(a, b) {
+    const len = Math.min(a.length, b.length);
+    let matches = 0;
+    for (let i = 0; i < len; i++) {
+        if (a[i] === b[i]) matches++;
+    }
+    return matches;
+}
+
+const SIMILARITY_THRESHOLD = 10; // ≥10 caractères en même position = suspicion
+
+/**
+ * Vérifie un ID de transaction.
+ * Retourne { valid: bool, code: string, message: string }
+ */
+function validerTxnId(txnId) {
+    // Nettoyer les espaces (tolérés à la saisie, retirés avant validation)
+    const raw = txnId.replace(/\s/g, '').trim();
+
+    // 1. Champ vide
+    if (!raw) {
+        return { valid: false, code: 'empty', message: 'Veuillez coller votre référence de paiement Wave.' };
+    }
+
+    // 2. Format invalide
+    if (!TXN_REGEX.test(raw)) {
+        return {
+            valid: false,
+            code: 'format',
+            message: `Format invalide. Une référence Wave ressemble à : T_R5553BC34EDGXUZF\n(une lettre, un tiret bas, puis au moins 10 caractères alphanumériques).`
+        };
+    }
+
+    // 3. ID déjà utilisé exactement
+    const usedIds = getUsedTxnIds();
+    if (usedIds.includes(raw)) {
+        return {
+            valid: false,
+            code: 'duplicate',
+            message: `Cette référence a déjà été soumise. Chaque transaction Wave est unique et ne peut être utilisée qu'une seule fois.`
+        };
+    }
+
+    // 4. Trop similaire à un ID déjà utilisé (fraude par variation)
+    for (const used of usedIds) {
+        const matches = countPositionalMatches(raw.toUpperCase(), used.toUpperCase());
+        if (matches >= SIMILARITY_THRESHOLD) {
+            return {
+                valid: false,
+                code: 'similar',
+                message: `Cette référence ressemble fortement à une transaction déjà utilisée (${matches} caractères identiques). Veuillez utiliser une vraie référence Wave.`
+            };
+        }
+    }
+
+    return { valid: true, code: 'ok', message: 'Référence valide.' };
+}
+
+// ==========================================
+// VALIDATION EN TEMPS RÉEL SUR LE CHAMP
+// ==========================================
+function attachTxnValidation(inputId, feedbackId) {
+    const input = document.getElementById(inputId);
+    const feedback = document.getElementById(feedbackId);
+    if (!input || !feedback) return;
+
+    // Icône SVG check vert
+    const iconOk = `<svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    // Icône SVG croix rouge
+    const iconErr = `<svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+
+    let iconEl = input.parentNode.querySelector('.field-txn-icon');
+    if (!iconEl) {
+        iconEl = document.createElement('span');
+        iconEl.className = 'field-txn-icon';
+        input.parentNode.appendChild(iconEl);
+    }
+
+    input.addEventListener('input', () => {
+        const val = input.value.trim();
+        if (!val) {
+            input.classList.remove('valid', 'invalid');
+            feedback.className = 'txn-feedback';
+            iconEl.className = 'field-txn-icon';
+            return;
+        }
+
+        const result = validerTxnId(val);
+        if (result.valid) {
+            input.classList.add('valid'); input.classList.remove('invalid');
+            feedback.className = 'txn-feedback ok show';
+            feedback.textContent = '✓ Référence valide';
+            iconEl.innerHTML = iconOk; iconEl.className = 'field-txn-icon show';
+        } else {
+            input.classList.add('invalid'); input.classList.remove('valid');
+            feedback.className = `txn-feedback ${result.code === 'format' ? 'warn' : 'err'} show`;
+            feedback.textContent = result.message;
+            iconEl.innerHTML = iconErr; iconEl.className = 'field-txn-icon show';
+        }
+    });
+
+    // Envelopper le champ s'il n'est pas déjà enveloppé
+    if (!input.parentNode.classList.contains('field-txn-wrap')) {
+        const wrap = document.createElement('div');
+        wrap.className = 'field-txn-wrap';
+        input.parentNode.insertBefore(wrap, input);
+        wrap.appendChild(input);
+        wrap.appendChild(iconEl);
+    }
+}
+
+// ==========================================
 // INIT
+// ==========================================
 window.onload = async () => {
     await chargerCandidates();
     const stored = localStorage.getItem('miss_voter');
@@ -312,6 +587,9 @@ window.onload = async () => {
     }
 };
 
+// ==========================================
+// CHARGEMENT CANDIDATES
+// ==========================================
 async function chargerCandidates() {
     try {
         const r = await fetch(`${API}/miss/candidates`);
@@ -323,6 +601,9 @@ async function chargerCandidates() {
     }
 }
 
+// ==========================================
+// RENDER GRID
+// ==========================================
 function renderGrid(list) {
     const sorted = [...list].sort((a, b) => b.votes - a.votes);
     document.getElementById('grid-count').textContent = `${sorted.length} CANDIDATES `;
@@ -330,8 +611,8 @@ function renderGrid(list) {
     document.getElementById('grid').innerHTML = sorted.map((c, i) => `
         <div class="card" style="animation: fadeUp 0.6s ease forwards ${i * 0.1}s; opacity:0;">
             <div class="card-img" onclick="openLightbox('${c.photo_url || ''}')">
-                ${c.photo_url 
-                    ? `<img src="${c.photo_url}" alt="${c.nom}">` 
+                ${c.photo_url
+                    ? `<img src="${c.photo_url}" alt="${c.nom}">`
                     : `<div style="height:100%; display:flex; align-items:center; justify-content:center; background:#1a1a1a;"><svg style="width:50px; fill:#333;"><use xlink:href="#icon-crown"></use></svg></div>`
                 }
                 <span class="card-numero">N° ${String(c.numero).padStart(2,'0')}</span>
@@ -351,26 +632,27 @@ function renderGrid(list) {
     `).join('');
 }
 
-// FONCTION LIGHTBOX (ZOOM)
+// ==========================================
+// LIGHTBOX
+// ==========================================
 function openLightbox(url) {
-    if(!url) return;
+    if (!url) return;
     const lb = document.getElementById('lightbox');
-    const img = document.getElementById('lightbox-img');
-    img.src = url;
+    document.getElementById('lightbox-img').src = url;
     lb.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
-
 function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
     document.body.style.overflow = '';
 }
 
-// LOGIQUE VOTE (Similaire à l'original, mise à jour visuelle)
+// ==========================================
+// VOTE
+// ==========================================
 function ouvrirVote(candidateId) {
     targetCand = allCandidates.find(c => c.id === candidateId);
     if (!targetCand) return;
-
     if (!currentVoter) {
         document.getElementById('login-for').innerHTML = `Vote pour <b>${targetCand.nom}</b>`;
         openModal('modal-login');
@@ -379,15 +661,10 @@ function ouvrirVote(candidateId) {
     }
 }
 
-// Les fonctions submitLogin, ouvrirModalVote, soumettreDemande, etc. 
-// doivent être reprises de ton code original ici pour fonctionner avec ton API.
-// Voici les versions adaptées au nouveau design :
-
 async function submitLogin() {
-    const tel = document.getElementById('login-tel').value;
+    const tel   = document.getElementById('login-tel').value;
     const email = document.getElementById('login-email').value;
-    if(!tel && !email) return toast("Veuillez remplir un champ", false);
-
+    if (!tel && !email) return toast("Veuillez remplir un champ", false);
     try {
         const r = await fetch(`${API}/miss/voter/login`, {
             method: 'POST',
@@ -411,14 +688,18 @@ function ouvrirModalVote() {
         <h2 style="font-family:'Cormorant Garamond'; font-size:28px; text-align:center; color:var(--gold2); margin-bottom:20px;">Soutenir ${c.nom}</h2>
     `;
 
-    if(isFirst) {
+    if (isFirst) {
         html += `
             <div style="background:rgba(201,168,76,0.1); padding:20px; border-radius:15px; text-align:center; border:1px solid var(--gold); margin-bottom:20px;">
                 <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px;">Premier Vote</div>
                 <div style="font-size:32px; font-weight:bold; color:var(--gold2);">100 FCFA</div>
             </div>
-            <a href="${WAVE_LINK}?amount=100" target="_blank" class="btn-main" style="display:block; text-decoration:none; text-align:center; margin-bottom:15px; background: #0098df; color:white;">Payer via WAVE</a>
-            <input type="text" class="field" id="txn-id-premier" placeholder="Référence de transaction Wave">
+            <a href="${WAVE_LINK}?amount=100" target="_blank" class="btn-main" style="display:block; text-decoration:none; text-align:center; margin-bottom:15px; background:#0098df; color:white;">Payer via WAVE</a>
+            <label style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:6px;">Référence de transaction</label>
+            <div class="field-txn-wrap">
+              <input type="text" class="field" id="txn-id-premier" placeholder="Ex : T_R5553BC34EDGXUZF" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="txn-feedback" id="txn-feedback-premier"></div>
             <button class="btn-main" onclick="soumettreDemande(1, 100)">Valider mon vote</button>
         `;
     } else {
@@ -433,16 +714,27 @@ function ouvrirModalVote() {
                     <span id="calc-total" style="color:var(--gold2);">25 FCFA</span>
                 </div>
             </div>
-            <a href="${WAVE_LINK}" id="wave-btn-multi" target="_blank" class="btn-main" style="display:block; text-decoration:none; text-align:center; margin-bottom:15px; background: #0098df; color:white;">Payer via WAVE</a>
-            <input type="text" class="field" id="txn-id-multi" placeholder="Référence de transaction Wave">
+            <a href="${WAVE_LINK}" id="wave-btn-multi" target="_blank" class="btn-main" style="display:block; text-decoration:none; text-align:center; margin-bottom:15px; background:#0098df; color:white;">Payer via WAVE</a>
+            <label style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:6px;">Référence de transaction</label>
+            <div class="field-txn-wrap">
+              <input type="text" class="field" id="txn-id-multi" placeholder="Ex : T_R5553BC34EDGXUZF" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="txn-feedback" id="txn-feedback-multi"></div>
             <button class="btn-main" onclick="soumettreDemandeMulti()">Confirmer les votes</button>
         `;
     }
     html += `<button onclick="closeModal('modal-vote')" style="background:none; border:none; color:var(--muted); width:100%; margin-top:15px; cursor:pointer;">Retour</button>`;
-    
+
     document.getElementById('modal-vote-content').innerHTML = html;
     openModal('modal-vote');
-    if(!isFirst) updateCalc();
+
+    // Attacher la validation en temps réel APRÈS injection du HTML
+    if (isFirst) {
+        attachTxnValidation('txn-id-premier', 'txn-feedback-premier');
+    } else {
+        attachTxnValidation('txn-id-multi', 'txn-feedback-multi');
+        updateCalc();
+    }
 }
 
 function updateCalc() {
@@ -452,24 +744,46 @@ function updateCalc() {
     document.getElementById('wave-btn-multi').href = `${WAVE_LINK}?amount=${total}`;
 }
 
+// ==========================================
+// SOUMISSION SÉCURISÉE
+// ==========================================
 async function soumettreDemande(nb, mont) {
-    const tid = document.getElementById('txn-id-premier')?.value || document.getElementById('txn-id-multi')?.value;
-    if(!tid) return toast("Référence manquante", false);
-    
+    const inputEl   = document.getElementById('txn-id-premier') || document.getElementById('txn-id-multi');
+    const feedbackEl = document.getElementById('txn-feedback-premier') || document.getElementById('txn-feedback-multi');
+    const tid = (inputEl ? inputEl.value : '').replace(/\s/g, '').trim();
+
+    // Validation complète avant envoi
+    const check = validerTxnId(tid);
+    if (!check.valid) {
+        if (inputEl) {
+            inputEl.classList.add('invalid', 'shake');
+            setTimeout(() => inputEl.classList.remove('shake'), 450);
+        }
+        if (feedbackEl) {
+            feedbackEl.className = `txn-feedback ${check.code === 'format' ? 'warn' : 'err'} show`;
+            feedbackEl.textContent = check.message;
+        }
+        toast(check.code === 'duplicate' ? '⛔ Référence déjà utilisée' : check.code === 'similar' ? '⚠️ Référence suspecte' : '❌ Référence invalide', false);
+        return;
+    }
+
     try {
         const r = await fetch(`${API}/miss/voter/demande-vote`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                voter_id: currentVoter.id,
-                candidate_numero: targetCand.numero,
-                nombre_votes: nb,
-                montant: mont,
-                transaction_id: tid
+                voter_id:          currentVoter.id,
+                candidate_numero:  targetCand.numero,
+                nombre_votes:      nb,
+                montant:           mont,
+                transaction_id:    tid
             })
         });
         const data = await r.json();
-        if(data.success) {
+        if (data.success) {
+            // Enregistrer l'ID localement pour bloquer les réutilisations
+            saveUsedTxnId(tid);
+
             document.getElementById('modal-vote-content').innerHTML = `
                 <div style="text-align:center; padding:20px;">
                     <svg class="icon-svg" style="width:60px; height:60px; color:var(--gold); margin-bottom:20px;"><use xlink:href="#icon-crown"></use></svg>
@@ -480,33 +794,41 @@ async function soumettreDemande(nb, mont) {
             `;
             currentVoter.a_paye_premier_vote = true;
             localStorage.setItem('miss_voter', JSON.stringify(currentVoter));
+        } else {
+            toast(data.message || "Erreur lors de l'envoi.", false);
         }
     } catch(e) { toast("Erreur réseau", false); }
 }
 
 function soumettreDemandeMulti() {
-    const qty = parseInt(document.getElementById('qty-votes').value);
+    const qty = Math.max(1, parseInt(document.getElementById('qty-votes').value) || 1);
     soumettreDemande(qty, qty * 25);
 }
 
+// ==========================================
+// FILTRE RECHERCHE
+// ==========================================
 function filtrer() {
     const q = document.getElementById('search').value.toLowerCase();
     renderGrid(allCandidates.filter(c => c.nom.toLowerCase().includes(q) || String(c.numero).includes(q)));
 }
 
-function openModal(id) { document.getElementById(id).classList.add('active'); }
+// ==========================================
+// MODALS & TOAST
+// ==========================================
+function openModal(id)  { document.getElementById(id).classList.add('active'); }
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
 function toast(msg, ok = true) {
     const t = document.createElement('div');
-    t.style.cssText = `background:${ok?'#1a4a1a':'#4a1a1a'}; color:white; padding:15px 25px; border-radius:10px; margin-top:10px; border:1px solid ${ok?'#2a6a2a':'#6a2a2a'};`;
+    t.style.cssText = `background:${ok ? '#1a4a1a' : '#4a1a1a'}; color:white; padding:15px 25px; border-radius:10px; margin-top:10px; border:1px solid ${ok ? '#2a6a2a' : '#6a2a2a'}; font-size:13px;`;
     t.textContent = msg;
     document.getElementById('toasts').appendChild(t);
-    setTimeout(() => t.remove(), 4000);
+    setTimeout(() => t.remove(), 5000);
 }
 
-// Close lightbox on Escape key
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+// Fermer lightbox avec Echap
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 
 <style>
