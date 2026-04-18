@@ -313,15 +313,15 @@ body::after {
 }
 
 
- /* Désactiver l'affichage des boutons de vote */
+ /* Désactiver l'affichage des boutons de vote 
 .btn-vote {
     display: none !important;
 } 
 
-/* Optionnel : masquer aussi les infos de prix en haut */
+ Optionnel : masquer aussi les infos de prix en haut 
 .vote-info {
     display: none !important;
-} 
+} */
 
     </style>
 </head>
@@ -836,7 +836,412 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* ===== BANNIÈRE PUBLICITAIRE ===== */
+#pub-overlay {
+    position: fixed; inset: 0; z-index: 9000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    animation: pubFadeIn 0.6s ease forwards;
+}
+
+@keyframes pubFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Fond particules dorées animées */
+#pub-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 30%, rgba(242,196,206,0.12) 0%, transparent 50%),
+                rgba(0,0,0,0.92);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+}
+
+/* Étoiles / particules */
+#pub-bg::before, #pub-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        radial-gradient(circle, rgba(201,168,76,0.9) 1px, transparent 1px),
+        radial-gradient(circle, rgba(232,201,122,0.6) 1px, transparent 1px);
+    background-size: 80px 80px, 130px 130px;
+    background-position: 0 0, 40px 40px;
+    animation: pubStars 4s linear infinite;
+    opacity: 0.4;
+}
+#pub-bg::after {
+    background-size: 110px 110px, 60px 60px;
+    animation-duration: 7s;
+    animation-direction: reverse;
+    opacity: 0.25;
+}
+
+@keyframes pubStars {
+    from { transform: translateY(0) translateX(0); }
+    to   { transform: translateY(-80px) translateX(20px); }
+}
+
+/* Rayons lumineux */
+.pub-ray {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 200%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.15), transparent);
+    transform-origin: left center;
+    animation: pubRay 6s ease-in-out infinite;
+}
+.pub-ray:nth-child(1) { transform: rotate(0deg);   animation-delay: 0s; }
+.pub-ray:nth-child(2) { transform: rotate(45deg);  animation-delay: 1s; }
+.pub-ray:nth-child(3) { transform: rotate(90deg);  animation-delay: 2s; }
+.pub-ray:nth-child(4) { transform: rotate(135deg); animation-delay: 3s; }
+.pub-ray:nth-child(5) { transform: rotate(180deg); animation-delay: 1.5s; }
+.pub-ray:nth-child(6) { transform: rotate(225deg); animation-delay: 2.5s; }
+.pub-ray:nth-child(7) { transform: rotate(270deg); animation-delay: 0.5s; }
+.pub-ray:nth-child(8) { transform: rotate(315deg); animation-delay: 3.5s; }
+
+@keyframes pubRay {
+    0%,100% { opacity: 0; }
+    50%      { opacity: 1; }
+}
+
+/* Carte de la pub */
+#pub-card {
+    position: relative; z-index: 1;
+    max-width: 500px; width: 100%;
+    background: linear-gradient(145deg, rgba(20,15,5,0.97), rgba(10,10,10,0.99));
+    border: 1px solid var(--gold);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(201,168,76,0.25), 0 0 120px rgba(201,168,76,0.08);
+    animation: pubCardIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes pubCardIn {
+    from { transform: scale(0.8) translateY(40px); opacity: 0; }
+    to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Ligne dorée décorative en haut de la carte */
+#pub-card::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
+    animation: pubShimmer 2.5s linear infinite;
+    background-size: 200% 100%;
+}
+
+@keyframes pubShimmer {
+    from { background-position: -200% 0; }
+    to   { background-position: 200% 0; }
+}
+
+/* Image pub */
+#pub-img-link { display: block; width: 100%; cursor: pointer; }
+#pub-img-link img {
+    width: 100%; display: block;
+    max-height: 320px; object-fit: cover;
+    transition: transform 0.4s ease;
+}
+#pub-img-link:hover img { transform: scale(1.03); }
+
+/* Texte sous la pub */
+#pub-footer {
+    padding: 18px 22px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+}
+#pub-footer-text {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+}
+#pub-footer-text span { color: var(--gold2); font-weight: 600; }
+
+/* Bouton fermer ✕ */
+#pub-close-btn {
+    position: absolute; top: 14px; right: 14px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(201,168,76,0.5);
+    color: var(--gold2);
+    font-size: 18px; font-weight: bold;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+    transition: all 0.2s ease;
+    line-height: 1;
+    backdrop-filter: blur(6px);
+}
+#pub-close-btn:hover {
+    background: var(--gold);
+    color: black;
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* Compteur avant fermeture */
+#pub-timer-badge {
+    font-size: 10px; color: var(--muted); text-align: center;
+    padding: 0 22px 14px;
+    letter-spacing: 0.08em;
+}
+#pub-timer-badge span { color: var(--gold); font-weight: 700; }
+
+/* ===== MANCHE ACTUELLE ===== */
+#manche-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 100px;
+    padding: 10px 22px;
+    margin: 0 auto 16px;
+    font-size: 13px;
+    color: var(--muted);
+}
+#manche-badge .manche-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold);
+    animation: manchePulse 2s ease-in-out infinite;
+}
+@keyframes manchePulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.5); }
+    50%      { box-shadow: 0 0 0 6px rgba(201,168,76,0); }
+}
+#manche-badge strong { color: var(--gold2); font-weight: 700; }
+
+/* ===== COMPTE À REBOURS ===== */
+#countdown-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 auto 20px;
+    flex-wrap: wrap;
+}
+.cd-block {
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 18px;
+    min-width: 70px;
+    backdrop-filter: blur(6px);
+}
+.cd-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 600;
+    color: var(--gold2);
+    line-height: 1;
+    transition: opacity 0.15s;
+}
+.cd-label {
+    font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 5px;
+}
+.cd-sep {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; color: var(--gold);
+    align-self: center;
+    opacity: 0.5;
+    animation: cdBlink 1s step-end infinite;
+}
+@keyframes cdBlink { 0%,100%{opacity:0.5} 50%{opacity:0.1} }
+
+@media (max-width: 480px) {
+    .cd-block { min-width: 58px; padding: 10px 12px; }
+    .cd-num { font-size: 28px; }
+    #pub-img-link img { max-height: 240px; }
+}
 </style>
+
+<!-- ===== BANNIÈRE PUBLICITAIRE ===== -->
+<div id="pub-overlay">
+    <!-- Fond animé -->
+    <div id="pub-bg">
+        <div class="pub-ray"></div>
+        <div class="pub-ray"></div>
+        <div class="pub-ray"></div>
+        <div class="pub-ray"></div>
+        <div class="pub-ray"></div>
+        <div class="pub-ray"></div>
+        <div class="pub-ray"></div>
+        <div class="pub-ray"></div>
+    </div>
+
+    <!-- Carte pub -->
+    <div id="pub-card">
+        <button id="pub-close-btn" onclick="fermerPub()" title="Fermer">✕</button>
+
+        <!-- Image cliquable → lien pub -->
+        <a id="pub-img-link" href="#" target="_blank" rel="noopener">
+            <img id="pub-img" src="" alt="Publicité">
+        </a>
+
+        <div id="pub-footer">
+            <span id="pub-footer-text">Publicité <span id="pub-sponsor-name"></span></span>
+        </div>
+        <div id="pub-timer-badge">Vous pouvez fermer dans <span id="pub-countdown-sec">5</span>s</div>
+    </div>
+</div>
+
+<script>
+// ===================================================
+// CONFIG BANNIÈRE PUBLICITAIRE
+// Modifiez uniquement ces 3 valeurs :
+// ===================================================
+const PUB_CONFIG = {
+    imageUrl:    "https://i.postimg.cc/nLFbrQry/11B13D76-2ED6-4D1C-AB37-A8B48D4D0D4E.png", // URL de votre image pub
+    lienUrl:     "https://chat.whatsapp.com/EApGlaQRlZgF6n58S01oEn?mode=gi_t",  // Lien de redirection au clic
+    sponsorName: "Le concour dess BG",             // Nom affiché sous la pub
+    delaiSec:    0                                // Secondes avant que le ✕ soit actif
+};
+
+// ===================================================
+// CONFIG MANCHE ACTUELLE
+// Modifiez le numéro de manche ici :
+// ===================================================
+const MANCHE_CONFIG = {
+    numero:      2,                     // Numéro de la manche en cours
+    label:       "Manche en cours"      // Texte affiché avant le numéro
+};
+
+// ===================================================
+// CONFIG COMPTE À REBOURS
+// Mettez la date/heure de fin de la manche (format ISO) :
+// ===================================================
+const COUNTDOWN_CONFIG = {
+    dateFinISO: "2026-04-20T00:00:00",  // ← Changez cette date !
+    messageApres: "La manche est terminée !"
+};
+
+// ==========================================
+// BANNIÈRE PUB — LOGIQUE
+// ==========================================
+(function initPub() {
+    const overlay  = document.getElementById('pub-overlay');
+    const imgEl    = document.getElementById('pub-img');
+    const linkEl   = document.getElementById('pub-img-link');
+    const secEl    = document.getElementById('pub-countdown-sec');
+    const closeBtn = document.getElementById('pub-close-btn');
+    const nameEl   = document.getElementById('pub-sponsor-name');
+
+    // Appliquer config
+    imgEl.src = PUB_CONFIG.imageUrl;
+    linkEl.href = PUB_CONFIG.lienUrl;
+    nameEl.textContent = PUB_CONFIG.sponsorName || '';
+
+    
+
+    const tick = setInterval(() => {
+        restant--;
+        if (secEl) secEl.textContent = restant;
+        if (restant <= 0) {
+            clearInterval(tick);
+            closeBtn.style.pointerEvents = '';
+            closeBtn.style.opacity = '';
+            document.getElementById('pub-timer-badge').style.opacity = '0';
+        }
+    }, 1000);
+
+    // Clic sur le fond (hors carte) → ferme aussi
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target === document.getElementById('pub-bg')) {
+            if (restant <= 0) fermerPub();
+        }
+    });
+})();
+
+function fermerPub() {
+    const overlay = document.getElementById('pub-overlay');
+    overlay.style.transition = 'opacity 0.4s ease';
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 420);
+}
+
+// ==========================================
+// MANCHE ACTUELLE — INJECT
+// ==========================================
+(function initManche() {
+    // Insérer le badge manche dans le hero, après .gold-line
+    const goldLine = document.querySelector('.gold-line');
+    if (!goldLine) return;
+
+    const badge = document.createElement('div');
+    badge.id = 'manche-badge';
+    badge.innerHTML = `
+        <span class="manche-dot"></span>
+        <span>${MANCHE_CONFIG.label} : <strong>MANCHE ${MANCHE_CONFIG.numero}</strong></span>
+    `;
+
+    goldLine.insertAdjacentElement('afterend', badge);
+})();
+
+// ==========================================
+// COMPTE À REBOURS — INJECT & TICK
+// ==========================================
+(function initCountdown() {
+    const goldLine = document.querySelector('.gold-line');
+    if (!goldLine) return;
+
+    // Créer le bloc countdown
+    const wrap = document.createElement('div');
+    wrap.id = 'countdown-wrap';
+    wrap.innerHTML = `
+        <div class="cd-block"><div class="cd-num" id="cd-j">--</div><div class="cd-label">Jours</div></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Heures</div></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Minutes</div></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Secondes</div></div>
+    `;
+
+    // Insérer après le badge manche (ou après gold-line si pas de manche)
+    const mancheBadge = document.getElementById('manche-badge');
+    const insertAfter = mancheBadge || goldLine;
+    insertAfter.insertAdjacentElement('afterend', wrap);
+
+    const finDate = new Date(COUNTDOWN_CONFIG.dateFinISO);
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function tickCountdown() {
+        const now  = new Date();
+        const diff = finDate - now;
+
+        if (diff <= 0) {
+            ['cd-j','cd-h','cd-m','cd-s'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = '00';
+            });
+            wrap.insertAdjacentHTML('afterend',
+                `<p style="text-align:center; color:var(--gold); font-size:13px; letter-spacing:0.1em; margin-bottom:16px;">${COUNTDOWN_CONFIG.messageApres}</p>`
+            );
+            clearInterval(cdInterval);
+            return;
+        }
+
+        const jours   = Math.floor(diff / 86400000);
+        const heures  = Math.floor((diff % 86400000) / 3600000);
+        const minutes = Math.floor((diff % 3600000)  / 60000);
+        const secondes= Math.floor((diff % 60000)    / 1000);
+
+        document.getElementById('cd-j').textContent = pad(jours);
+        document.getElementById('cd-h').textContent = pad(heures);
+        document.getElementById('cd-m').textContent = pad(minutes);
+        document.getElementById('cd-s').textContent = pad(secondes);
+    }
+
+    tickCountdown();
+    const cdInterval = setInterval(tickCountdown, 1000);
+})();
+</script>
 
 </body>
 </html>
