@@ -1,1 +1,615 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen Beauty — Espace Publicitaire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --deep: #04040a;
+    --surface: rgba(255,255,255,0.03);
+    --border: rgba(201,168,76,0.2);
+    --text: #f0ece4;
+    --muted: rgba(240,236,228,0.5);
+}
 
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--deep);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(120,75,15,0.2) 0%, transparent 60%),
+        #04040a;
+}
+
+body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+    opacity: 0.07;
+}
+
+/* ─── TOPBAR ─── */
+.topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px;
+    background: rgba(4,4,10,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+}
+.topbar-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 0.12em;
+    background: linear-gradient(120deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.topbar-right {
+    display: flex; align-items: center; gap: 18px;
+}
+.topbar-badge {
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); padding: 5px 14px;
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 100px;
+    background: rgba(201,168,76,0.06);
+}
+.contact-btn {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600;
+    color: #04040a; background: linear-gradient(135deg, var(--gold), #8a6010);
+    padding: 8px 20px; border-radius: 100px; text-decoration: none;
+    border: none; cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.contact-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
+
+/* ─── HERO ─── */
+.hero {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 80px 20px 60px;
+    overflow: hidden;
+}
+.hero-eyebrow {
+    font-size: 9px; letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px; font-weight: 500; opacity: 0.8;
+}
+.hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 13vw, 130px);
+    line-height: 0.9; letter-spacing: 0.04em;
+    color: var(--text);
+}
+.hero h1 span {
+    background: linear-gradient(120deg, #a07820, var(--gold), var(--gold2), var(--gold));
+    background-size: 250% 100%;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: goldFlow 5s ease infinite;
+}
+@keyframes goldFlow { 0%,100%{background-position:0%} 50%{background-position:100%} }
+
+.hero-sub {
+    max-width: 520px; margin: 20px auto 0;
+    font-size: 13px; color: var(--muted); line-height: 1.8; font-weight: 300; letter-spacing: 0.04em;
+}
+
+/* Stats */
+.stats {
+    display: inline-flex; gap: 0;
+    margin-top: 44px;
+    border: 1px solid var(--border); border-radius: 18px; overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+.stat-item {
+    padding: 18px 32px; text-align: center;
+    background: rgba(255,255,255,0.02);
+}
+.stat-item + .stat-item { border-left: 1px solid var(--border); }
+.stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; color: var(--gold2); letter-spacing: 0.05em; line-height: 1;
+}
+.stat-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 4px; }
+
+/* Séparateur */
+.sep { position: relative; z-index: 2; display: flex; align-items: center; gap: 16px; max-width: 600px; margin: 60px auto 50px; padding: 0 20px; }
+.sep-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3)); }
+.sep-line.r { background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent); }
+.sep-text { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); white-space: nowrap; font-weight: 600; }
+
+/* ─── GRID PUBS ─── */
+.pubs-section { position: relative; z-index: 2; max-width: 1300px; margin: 0 auto; padding: 0 20px 80px; }
+
+.pubs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Spots spéciaux */
+.pub-spot:nth-child(1) { grid-column: span 2; }
+.pub-spot:nth-child(5) { grid-column: span 2; }
+.pub-spot:nth-child(7) { grid-column: span 3; }
+
+.pub-spot {
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    background: rgba(255,255,255,0.02);
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+    cursor: pointer;
+    min-height: 220px;
+    display: flex; flex-direction: column;
+}
+.pub-spot:hover {
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 16px 50px rgba(0,0,0,0.4), 0 0 30px rgba(201,168,76,0.07);
+    transform: translateY(-6px);
+}
+
+/* IMAGE dans le spot */
+.pub-img-wrap {
+    flex: 1; position: relative; overflow: hidden;
+    min-height: 180px;
+}
+.pub-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+.pub-spot:hover .pub-img-wrap img { transform: scale(1.06); }
+
+/* Overlay sur image */
+.pub-img-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(4,4,10,0.75) 0%, transparent 55%);
+    pointer-events: none;
+}
+
+/* EMPTY SPOT (disponible) */
+.pub-spot.empty {
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(201,168,76,0.025) 0px,
+        rgba(201,168,76,0.025) 1px,
+        transparent 1px,
+        transparent 14px
+    );
+    border-style: dashed;
+    cursor: default;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 30px;
+}
+.pub-spot.empty:hover { transform: none; box-shadow: none; border-color: rgba(201,168,76,0.35); }
+
+.empty-icon { font-size: 28px; margin-bottom: 12px; opacity: 0.4; }
+.empty-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-weight: 600; }
+.empty-sub { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.empty-cta {
+    display: inline-block; margin-top: 14px;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
+    color: #04040a; background: linear-gradient(135deg, var(--gold), #8a6010);
+    padding: 8px 20px; border-radius: 100px; text-decoration: none;
+    transition: box-shadow 0.2s;
+}
+.empty-cta:hover { box-shadow: 0 4px 16px rgba(201,168,76,0.3); }
+
+/* INFO BAS DE CARD */
+.pub-info {
+    padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+    background: rgba(4,4,10,0.6);
+    backdrop-filter: blur(6px);
+    position: relative; z-index: 2;
+}
+.pub-info-name { font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: 0.04em; }
+.pub-info-tag {
+    font-size: 8px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--gold); background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25); border-radius: 100px;
+    padding: 3px 10px;
+}
+.pub-info-btn {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+    color: var(--gold); background: none; border: 1px solid rgba(201,168,76,0.4);
+    padding: 6px 14px; border-radius: 100px; cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+}
+.pub-info-btn:hover { background: var(--gold); color: #04040a; }
+
+/* Label "PUB" discret */
+.pub-label-badge {
+    position: absolute; top: 12px; right: 12px; z-index: 3;
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(240,236,228,0.5);
+    background: rgba(4,4,10,0.7); border: 1px solid rgba(255,255,255,0.1);
+    padding: 3px 8px; border-radius: 4px; backdrop-filter: blur(6px);
+}
+
+/* ─── TARIFS ─── */
+.tarifs-section {
+    position: relative; z-index: 2;
+    max-width: 1000px; margin: 0 auto 100px; padding: 0 20px;
+}
+.section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 64px); letter-spacing: 0.06em;
+    text-align: center; margin-bottom: 8px;
+}
+.section-title span { color: var(--gold2); }
+.section-sub { text-align: center; font-size: 12px; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 44px; }
+
+.tarifs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+.tarif-card {
+    border: 1px solid var(--border); border-radius: 22px;
+    padding: 32px 26px; position: relative; overflow: hidden;
+    background: rgba(255,255,255,0.02);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.tarif-card:hover { transform: translateY(-8px); border-color: rgba(201,168,76,0.45); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.tarif-card.featured {
+    border-color: rgba(201,168,76,0.5);
+    background: linear-gradient(160deg, rgba(201,168,76,0.06), rgba(255,255,255,0.02));
+    box-shadow: 0 0 40px rgba(201,168,76,0.08);
+}
+.tarif-card.featured::before {
+    content: 'Populaire';
+    position: absolute; top: 0; right: 24px;
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;
+    color: #04040a; background: linear-gradient(135deg, var(--gold), var(--gold2));
+    padding: 5px 14px; border-radius: 0 0 12px 12px;
+}
+.tarif-name { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.tarif-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 50px; color: var(--gold2); line-height: 1; letter-spacing: 0.03em; margin-bottom: 4px;
+}
+.tarif-price sub { font-size: 16px; vertical-align: middle; letter-spacing: 0.1em; }
+.tarif-period { font-size: 11px; color: var(--muted); margin-bottom: 24px; }
+.tarif-features { list-style: none; margin-bottom: 28px; }
+.tarif-features li {
+    font-size: 12px; color: var(--muted); padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: center; gap: 10px;
+}
+.tarif-features li::before { content: '✦'; color: var(--gold); font-size: 8px; flex-shrink: 0; }
+.tarif-cta {
+    display: block; width: 100%; text-align: center;
+    padding: 13px; border-radius: 100px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
+    text-decoration: none; transition: all 0.25s; cursor: pointer; border: none;
+    font-family: 'Outfit', sans-serif;
+}
+.tarif-cta.outline { background: none; border: 1px solid rgba(201,168,76,0.45); color: var(--gold2); }
+.tarif-cta.outline:hover { background: rgba(201,168,76,0.12); }
+.tarif-cta.solid { background: linear-gradient(135deg, var(--gold), #8a6010); color: #04040a; box-shadow: 0 4px 20px rgba(201,168,76,0.2); }
+.tarif-cta.solid:hover { box-shadow: 0 8px 28px rgba(201,168,76,0.35); transform: translateY(-1px); }
+
+/* ─── CTA FINAL ─── */
+.cta-section {
+    position: relative; z-index: 2;
+    text-align: center; padding: 60px 20px 100px;
+}
+.cta-box {
+    max-width: 620px; margin: 0 auto;
+    border: 1px solid rgba(201,168,76,0.3); border-radius: 28px;
+    padding: 52px 40px;
+    background: linear-gradient(160deg, rgba(201,168,76,0.05), rgba(255,255,255,0.01));
+    position: relative; overflow: hidden;
+}
+.cta-box::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
+    background-size: 200% 100%; animation: ctaShimmer 3s linear infinite;
+}
+@keyframes ctaShimmer { from{background-position:-200% 0} to{background-position:200% 0} }
+.cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 54px); letter-spacing: 0.06em; margin-bottom: 14px;
+    color: var(--text);
+}
+.cta-title span { color: var(--gold2); }
+.cta-text { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 28px; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.cta-btn-wa {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 28px; border-radius: 100px;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
+    text-decoration: none; transition: all 0.25s;
+    background: linear-gradient(135deg, rgba(37,211,102,0.18), rgba(18,140,64,0.1));
+    border: 1px solid rgba(37,211,102,0.45); color: #4ade80;
+}
+.cta-btn-wa:hover { background: rgba(37,211,102,0.22); box-shadow: 0 6px 20px rgba(37,211,102,0.2); transform: translateY(-2px); }
+.cta-btn-gold {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 28px; border-radius: 100px;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
+    text-decoration: none; transition: all 0.25s;
+    background: linear-gradient(135deg, var(--gold), #8a6010); color: #04040a;
+    border: none; cursor: pointer; font-family: 'Outfit', sans-serif;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.2);
+}
+.cta-btn-gold:hover { box-shadow: 0 8px 28px rgba(201,168,76,0.4); transform: translateY(-2px); }
+
+/* ─── FOOTER ─── */
+footer {
+    position: relative; z-index: 2;
+    border-top: 1px solid var(--border);
+    padding: 24px 28px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.1em;
+    background: linear-gradient(120deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+footer p { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+
+/* ─── WA FLOAT ─── */
+.wa-float {
+    position: fixed; bottom: 26px; left: 26px; z-index: 400;
+    display: flex; align-items: center; text-decoration: none;
+}
+.wa-bubble {
+    width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(37,211,102,0.15); border: 1px solid rgba(37,211,102,0.4);
+    backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center;
+    color: #4ade80; position: relative;
+    transition: all 0.28s; box-shadow: 0 4px 20px rgba(37,211,102,0.15);
+}
+.wa-dot {
+    position: absolute; top: 3px; right: 3px; width: 10px; height: 10px;
+    border-radius: 50%; background: #34d399; border: 2px solid var(--deep);
+    animation: waPulse 2.2s ease-in-out infinite;
+}
+@keyframes waPulse { 0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,0.5)} 50%{box-shadow:0 0 0 6px rgba(52,211,153,0)} }
+.wa-label {
+    max-width: 0; overflow: hidden; white-space: nowrap;
+    background: rgba(10,10,10,0.92); border: 1px solid rgba(37,211,102,0.25); border-left: none;
+    border-radius: 0 50px 50px 0; font-size: 11px; font-weight: 600; color: #4ade80;
+    margin-left: -8px; line-height: 50px; backdrop-filter: blur(10px);
+    transition: max-width 0.3s, padding 0.3s;
+}
+.wa-float:hover .wa-label { max-width: 180px; padding: 0 16px; }
+.wa-float:hover .wa-bubble { background: rgba(37,211,102,0.22); transform: scale(1.05); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+    .pubs-grid { grid-template-columns: 1fr 1fr; }
+    .pub-spot:nth-child(1),
+    .pub-spot:nth-child(5),
+    .pub-spot:nth-child(7) { grid-column: span 2; }
+    .tarifs-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+    .stats { flex-direction: column; }
+    .stat-item + .stat-item { border-left: none; border-top: 1px solid var(--border); }
+    .topbar { padding: 12px 16px; }
+}
+@media (max-width: 480px) {
+    .pubs-grid { grid-template-columns: 1fr; }
+    .pub-spot:nth-child(1),
+    .pub-spot:nth-child(5),
+    .pub-spot:nth-child(7) { grid-column: span 1; }
+    .cta-box { padding: 36px 24px; }
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+    <span class="topbar-logo">Queen Beauty</span>
+    <div class="topbar-right">
+        <span class="topbar-badge">Espace Pub</span>
+        <a href="https://wa.me/2250504771284?text=Bonjour%2C%20je%20veux%20publier%20une%20pub%20sur%20Queen%20Beauty." target="_blank" class="contact-btn">Réserver un spot</a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <p class="hero-eyebrow">Touchez notre audience — Côte d'Ivoire & Diaspora</p>
+    <h1>VOTRE PUB<br><span>ICI</span></h1>
+    <p class="hero-sub">Queen Beauty est une plateforme à forte audience. Profitez de notre visibilité pour promouvoir votre marque, service ou événement auprès d'une communauté engagée.</p>
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-num" id="stat-vote">—</div>
+            <div class="stat-label">Votes enregistrés</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num" id="stat-candidate">—</div>
+            <div class="stat-label">Candidates suivies</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Audience ciblée CI</div>
+        </div>
+    </div>
+</section>
+
+<!-- SEP -->
+<div class="sep">
+    <div class="sep-line"></div>
+    <span class="sep-text">Spots disponibles</span>
+    <div class="sep-line r"></div>
+</div>
+
+<!-- GRILLE PUBS -->
+<section class="pubs-section">
+    <div class="pubs-grid" id="pubs-grid">
+        <!-- Rempli dynamiquement par JS -->
+    </div>
+</section>
+
+<!-- SEP -->
+<div class="sep">
+    <div class="sep-line"></div>
+    <span class="sep-text">Nos offres</span>
+    <div class="sep-line r"></div>
+</div>
+
+<!-- TARIFS -->
+<section class="tarifs-section">
+    <h2 class="section-title">Nos <span>Tarifs</span></h2>
+    <p class="section-sub">Choisissez le format qui correspond à vos objectifs</p>
+    <div class="tarifs-grid">
+        <div class="tarif-card">
+            <div class="tarif-name">Essentiel</div>
+            <div class="tarif-price">2 000<sub> FCFA</sub></div>
+            <div class="tarif-period">/ 24 heures</div>
+            <ul class="tarif-features">
+                <li>1 bannière standard</li>
+                <li>Format 1×1 ou 2×1</li>
+                <li>Image + lien cliquable</li>
+                <li>Rapport de visibilité</li>
+            </ul>
+            <a href="https://wa.me/2250504771284?text=Je%20veux%20le%20pack%20Essentiel" target="_blank" class="tarif-cta outline">Choisir</a>
+        </div>
+        <div class="tarif-card featured">
+            <div class="tarif-name">Premium</div>
+            <div class="tarif-price">5 000<sub> FCFA</sub></div>
+            <div class="tarif-period">/ 3 jours</div>
+            <ul class="tarif-features">
+                <li>2 bannières premium</li>
+                <li>Spot large (bannière pleine largeur)</li>
+                <li>Image + lien + nom sponsor</li>
+                <li>Priorité d'affichage</li>
+                <li>Rapport détaillé</li>
+            </ul>
+            <a href="https://wa.me/2250504771284?text=Je%20veux%20le%20pack%20Premium" target="_blank" class="tarif-cta solid">Choisir</a>
+        </div>
+        <div class="tarif-card">
+            <div class="tarif-name">Exclusif</div>
+            <div class="tarif-price">10 000<sub> FCFA</sub></div>
+            <div class="tarif-period">/ 1 semaine</div>
+            <ul class="tarif-features">
+                <li>Spots illimités</li>
+                <li>Bannière intro (popup)</li>
+                <li>Tous les formats</li>
+                <li>Priorité maximale</li>
+                <li>Accompagnement créatif</li>
+            </ul>
+            <a href="https://wa.me/2250504771284?text=Je%20veux%20le%20pack%20Exclusif" target="_blank" class="tarif-cta outline">Choisir</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+    <div class="cta-box">
+        <h3 class="cta-title">Prêt à vous <span>faire voir</span> ?</h3>
+        <p class="cta-text">Contactez-nous sur WhatsApp pour réserver votre espace publicitaire. Réponse rapide, mise en ligne en moins de 24h.</p>
+        <div class="cta-btns">
+            <a href="https://wa.me/2250504771284?text=Bonjour%2C%20je%20veux%20publier%20une%20pub%20sur%20Queen%20Beauty." target="_blank" class="cta-btn-wa">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp
+            </a>
+            <a href="mailto:contact@queenbeauty.ci" class="cta-btn-gold">
+                ✉ Envoyer un mail
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <span class="footer-logo">Queen Beauty</span>
+    <p>Espace Publicitaire — Côte d'Ivoire</p>
+    <p style="font-size:10px; color: var(--muted);">© 2026 Queen Beauty. Tous droits réservés.</p>
+</footer>
+
+<!-- WA FLOAT -->
+<a class="wa-float" href="https://wa.me/2250504771284?text=Bonjour%2C%20je%20veux%20publier%20une%20pub%20sur%20Queen%20Beauty." target="_blank" rel="noopener">
+    <div class="wa-bubble">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span class="wa-dot"></span>
+    </div>
+    <span class="wa-label">Nous contacter</span>
+</a>
+
+<script>
+// ─── CONFIG PUBS ───
+// Ajoutez / modifiez les pubs ici.
+// Si image = null → spot "disponible" affiché.
+const PUBS = [
+    {
+        image: "https://i.postimg.cc/nLFbrQry/11B13D76-2ED6-4D1C-AB37-A8B48D4D0D4E.png",
+        lien:  "https://chat.whatsapp.com/EApGlaQRlZgF6n58S01oEn?mode=gi_t",
+        nom:   "Le Concours des BG",
+        tag:   "Communauté",
+    },
+    { image: null },
+    { image: null },
+    { image: null },
+    { image: null },
+    { image: null },
+    { image: null },
+];
+
+// ─── RENDER GRILLE ───
+function renderPubs() {
+    const grid = document.getElementById('pubs-grid');
+    grid.innerHTML = PUBS.map((pub, i) => {
+        if (pub.image) {
+            return `
+            <a class="pub-spot" href="${pub.lien || '#'}" target="_blank" rel="noopener"
+               style="animation:fadeUp 0.5s ease forwards ${i*0.08}s; opacity:0; text-decoration:none;">
+                <span class="pub-label-badge">PUB</span>
+                <div class="pub-img-wrap">
+                    <img src="${pub.image}" alt="${pub.nom || 'Publicité'}" loading="lazy">
+                </div>
+                <div class="pub-info">
+                    <span class="pub-info-name">${pub.nom || 'Sponsor'}</span>
+                    <span class="pub-info-tag">${pub.tag || 'Partenaire'}</span>
+                </div>
+            </a>`;
+        } else {
+            return `
+            <div class="pub-spot empty"
+                 style="animation:fadeUp 0.5s ease forwards ${i*0.08}s; opacity:0;">
+                <div class="empty-icon">✦</div>
+                <div class="empty-title">Spot disponible</div>
+                <div class="empty-sub">Cet espace attend votre marque ou votre service.</div>
+                <a href="https://wa.me/2250504771284?text=Bonjour%2C%20je%20veux%20r%C3%A9server%20un%20spot%20pub." target="_blank" class="empty-cta">Réserver</a>
+            </div>`;
+        }
+    }).join('');
+}
+
+// ─── STATS depuis l'API ───
+const API = "https://backend-xxgf.onrender.com";
+async function loadStats() {
+    try {
+        const r = await fetch(`${API}/miss/candidates`);
+        const data = await r.json();
+        const candidates = data.candidates || [];
+        const totalVotes = candidates.reduce((s, c) => s + parseInt(c.votes || 0), 0);
+        document.getElementById('stat-votes').textContent = totalVotes.toLocaleString('fr-FR');
+        document.getElementById('stat-candidates').textContent = candidates.length;
+    } catch(e) {
+        document.getElementById('stat-votes').textContent = '1K+';
+        document.getElementById('stat-candidates').textContent = '20+';
+    }
+}
+
+window.onload = () => {
+    renderPubs();
+    loadStats();
+};
+</script>
+</body>
+</html>
