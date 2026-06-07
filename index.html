@@ -1,674 +1,842 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clean Street — Association</title>
-
-
-
-<meta property="og:title" content="Clean Street">
-<meta property="og:description" content="Association engagée pour des villes plus propres">
-<meta property="og:image" content="https://i.postimg.cc/PrrCJFhh/IMG-6043.png">
-<meta property="og:url" content="https://clean-street-one.vercel.app">
-<meta property="og:type" content="website">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://ton-domaine.com/images/apercu.jpg">
-
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Miss Beauté — Excellence & Élégance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+/* ===== VARIABLES & THÈME NOIR/OR ===== */
 :root {
-  --bg: #e8f0f7;
-  --bg2: #d0e4f5;
-  --text: #0d1f2d;
-  --text2: #3a5068;
-  --accent: #1a7f5a;
-  --accent2: #0ea96e;
-  --glass: rgba(255,255,255,0.35);
-  --glass-border: rgba(255,255,255,0.6);
-  --glass-shadow: rgba(0,80,60,0.12);
-  --blur: blur(18px) saturate(180%);
-  --card-bg: rgba(255,255,255,0.28);
-  --overlay: rgba(255,255,255,0.15);
-}
-[data-theme="dark"] {
-  --bg: #091520;
-  --bg2: #0d2035;
-  --text: #e0f0ea;
-  --text2: #89b8a8;
-  --accent: #2ecc8f;
-  --accent2: #1aff99;
-  --glass: rgba(10,30,50,0.45);
-  --glass-border: rgba(255,255,255,0.12);
-  --glass-shadow: rgba(0,0,0,0.35);
-  --card-bg: rgba(15,35,55,0.5);
-  --overlay: rgba(0,0,0,0.2);
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  transition:background .4s,color .4s;
-  overflow-x:hidden;
+    --gold:    #c9a84c;
+    --gold2:   #e8c97a;
+    --rose:    #f2c4ce;
+    --deep:    #0a0a0a; /* Noir pur */
+    --surface: rgba(30, 30, 30, 0.6);
+    --glass:   rgba(255, 255, 255, 0.05);
+    --border:  rgba(201, 168, 76, 0.25);
+    --text:    #ffffff;
+    --muted:   rgba(255, 255, 255, 0.6);
 }
 
-/* BG MESH */
-.bg-mesh{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(30,180,120,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 80%, rgba(20,100,200,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(100,200,160,0.1) 0%, transparent 70%);
-  transition:all .4s;
-}
-[data-theme="dark"] .bg-mesh{
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,200,100,0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 80%, rgba(0,80,160,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0,100,60,0.08) 0%, transparent 70%);
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deep);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image: radial-gradient(circle at 50% -20%, #2a1b10 0%, #0a0a0a 100%);
 }
 
-/* NAVBAR */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1rem 2rem;
-  background:var(--glass);
-  backdrop-filter:var(--blur);
-  -webkit-backdrop-filter:var(--blur);
-  border-bottom:1px solid var(--glass-border);
-  box-shadow:0 4px 24px var(--glass-shadow);
-}
-.nav-logo{
-  font-family:'Playfair Display',serif;
-  font-size:1.5rem;font-weight:900;
-  color:var(--accent);
-  letter-spacing:-0.02em;
-  display:flex;align-items:center;gap:.5rem;
-}
-.nav-logo span{color:var(--text);font-weight:400;}
-.nav-links{display:flex;gap:1.5rem;align-items:center;}
-.nav-links a{
-  color:var(--text2);text-decoration:none;font-size:.9rem;font-weight:500;
-  transition:color .2s;
-}
-.nav-links a:hover{color:var(--accent);}
-.theme-btn{
-  background:var(--glass);
-  border:1px solid var(--glass-border);
-  backdrop-filter:var(--blur);
-  border-radius:50%;width:40px;height:40px;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all .3s;color:var(--text);
-}
-.theme-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
-
-/* HERO */
-.hero{
-  position:relative;z-index:1;
-  min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:6rem 2rem 4rem;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:var(--glass);
-  border:1px solid var(--glass-border);
-  backdrop-filter:var(--blur);
-  border-radius:999px;padding:.4rem 1.2rem;
-  font-size:.8rem;font-weight:500;color:var(--accent);
-  margin-bottom:1.5rem;
-  animation:fadeUp .6s ease both;
-}
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.8rem,7vw,5.5rem);
-  font-weight:900;line-height:1.05;
-  color:var(--text);
-  animation:fadeUp .7s .1s ease both;
-}
-.hero h1 em{color:var(--accent);font-style:normal;}
-.hero p{
-  max-width:560px;margin:1.5rem auto 0;
-  font-size:1.1rem;color:var(--text2);line-height:1.7;
-  animation:fadeUp .7s .2s ease both;
-}
-.hero-btns{
-  display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;justify-content:center;
-  animation:fadeUp .7s .3s ease both;
-}
-.btn{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.85rem 2rem;border-radius:999px;
-  font-size:.95rem;font-weight:500;cursor:pointer;
-  text-decoration:none;border:none;transition:all .25s;
-}
-.btn-primary{
-  background:var(--accent);color:#fff;
-  box-shadow:0 4px 20px rgba(26,127,90,0.35);
-}
-.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,127,90,0.45);}
-.btn-glass{
-  background:var(--glass);color:var(--text);
-  border:1px solid var(--glass-border);
-  backdrop-filter:var(--blur);
-}
-.btn-glass:hover{background:var(--glass-border);transform:translateY(-2px);}
-
-/* SLIDER */
-.slider-section{position:relative;z-index:1;padding:3rem 2rem;max-width:1100px;margin:0 auto;}
-.slider-wrap{
-  position:relative;overflow:hidden;border-radius:24px;
-  background:var(--glass);backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border);
-  box-shadow:0 8px 40px var(--glass-shadow);
-  aspect-ratio:16/6;
-}
-.slide{
-  position:absolute;inset:0;opacity:0;transition:opacity .7s ease;
-  display:flex;align-items:flex-end;
-}
-.slide.active{opacity:1;}
-.slide img{width:100%;height:100%;object-fit:cover;border-radius:24px;}
-.slide-caption{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:2rem;
-  background:linear-gradient(transparent,rgba(0,0,0,0.5));
-  border-radius:0 0 24px 24px;
-  color:#fff;font-size:1rem;font-weight:500;
-}
-.slide-dots{
-  display:flex;justify-content:center;gap:.5rem;margin-top:1rem;
-}
-.dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--text2);opacity:.4;cursor:pointer;transition:all .3s;
-}
-.dot.active{opacity:1;background:var(--accent);width:24px;border-radius:4px;}
-
-/* SECTIONS */
-section{position:relative;z-index:1;padding:5rem 2rem;max-width:1100px;margin:0 auto;}
-.section-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;
-  color:var(--text);margin-bottom:.5rem;
-}
-.section-sub{color:var(--text2);font-size:1rem;margin-bottom:3rem;}
-
-/* DONS */
-.collectes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
-.collecte-card{
-  background:var(--card-bg);
-  backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border);
-  border-radius:20px;padding:1.8rem;
-  box-shadow:0 4px 24px var(--glass-shadow);
-  transition:transform .3s,box-shadow .3s;
-}
-.collecte-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px var(--glass-shadow);}
-.collecte-nom{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:.5rem;}
-.collecte-progress-wrap{
-  background:var(--overlay);border-radius:999px;height:8px;margin:1rem 0;overflow:hidden;
-}
-.collecte-progress{
-  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
-  border-radius:999px;transition:width .8s ease;
-}
-.collecte-amounts{display:flex;justify-content:space-between;font-size:.85rem;color:var(--text2);}
-.collecte-amounts strong{color:var(--accent);}
-
-/* FORM DON */
-.don-form{
-  background:var(--card-bg);backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border);border-radius:24px;padding:2.5rem;
-  box-shadow:0 8px 40px var(--glass-shadow);max-width:540px;
-}
-.form-group{margin-bottom:1.2rem;}
-.form-group label{display:block;font-size:.85rem;font-weight:500;color:var(--text2);margin-bottom:.4rem;}
-.form-group input,.form-group select{
-  width:100%;padding:.85rem 1.2rem;
-  background:var(--glass);backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border);border-radius:12px;
-  color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;
-  outline:none;transition:border-color .2s,box-shadow .2s;
-}
-.form-group input:focus,.form-group select:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(26,127,90,0.15);
-}
-.wave-link{
-  display:inline-flex;align-items:center;gap:.6rem;
-  padding:.75rem 1.5rem;border-radius:12px;
-  background:linear-gradient(135deg,#1a7f5a,#0ea96e);
-  color:#fff;text-decoration:none;font-weight:500;font-size:.9rem;
-  margin-bottom:1rem;transition:all .25s;
-  box-shadow:0 4px 16px rgba(26,127,90,0.3);
-}
-.wave-link:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,127,90,0.4);}
-
-/* MEMBRES */
-.membres-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.5rem;}
-.membre-card{
-  background:var(--card-bg);backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border);border-radius:20px;
-  padding:1.5rem 1rem;text-align:center;
-  box-shadow:0 4px 20px var(--glass-shadow);
-  transition:transform .3s,box-shadow .3s;cursor:pointer;
-}
-.membre-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px var(--glass-shadow);}
-.membre-avatar{
-  width:80px;height:80px;border-radius:50%;
-  object-fit:cover;margin:0 auto 1rem;
-  border:3px solid var(--glass-border);
-  display:block;background:var(--overlay);
-}
-.membre-nom{font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;margin-bottom:.3rem;}
-.membre-role{font-size:.8rem;color:var(--accent);font-weight:500;}
-.membre-qr{
-  display:inline-flex;align-items:center;gap:.3rem;
-  margin-top:.8rem;font-size:.75rem;color:var(--text2);
-  text-decoration:none;
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:999px;padding:.25rem .75rem;transition:all .2s;
-}
-.membre-qr:hover{color:var(--accent);border-color:var(--accent);}
-
-/* PROFIL MEMBRE PAGE */
-#profil-page{
-  display:none;position:fixed;inset:0;z-index:200;
-  background:var(--glass);backdrop-filter:blur(30px) saturate(200%);
-  align-items:center;justify-content:center;flex-direction:column;
-  text-align:center;padding:2rem;
-}
-#profil-page.show{display:flex;}
-.profil-card{
-  background:var(--card-bg);backdrop-filter:var(--blur);
-  border:1px solid var(--glass-border);border-radius:28px;
-  padding:3rem 2.5rem;max-width:400px;width:100%;
-  box-shadow:0 20px 60px var(--glass-shadow);
-  animation:scaleIn .4s ease;
-}
-.profil-avatar{
-  width:120px;height:120px;border-radius:50%;
-  object-fit:cover;margin:0 auto 1.5rem;display:block;
-  border:4px solid var(--accent);
-}
-.profil-nom{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;margin-bottom:.3rem;}
-.profil-role{color:var(--accent);font-weight:500;margin-bottom:1rem;}
-.profil-desc{color:var(--text2);line-height:1.6;font-size:.95rem;margin-bottom:1.5rem;}
-.profil-id{
-  font-size:.75rem;color:var(--text2);
-  background:var(--overlay);border-radius:8px;padding:.4rem .8rem;
-  font-family:monospace;margin-bottom:1rem;display:inline-block;
-}
-.close-profil{
-  position:absolute;top:1.5rem;right:1.5rem;
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:50%;width:40px;height:40px;
-  cursor:pointer;color:var(--text);font-size:1.2rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .2s;
-}
-.close-profil:hover{background:var(--accent);color:#fff;}
-
-/* FOOTER */
-footer{
-  position:relative;z-index:1;
-  text-align:center;padding:2rem;
-  color:var(--text2);font-size:.85rem;
-  border-top:1px solid var(--glass-border);
+/* Effet grain de luxe */
+body::after {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+    opacity: 0.1; pointer-events: none; z-index: 1;
 }
 
-/* TOAST */
-.toast{
-  position:fixed;bottom:2rem;right:2rem;z-index:300;
-  background:var(--accent);color:#fff;
-  padding:1rem 1.5rem;border-radius:12px;
-  font-size:.9rem;font-weight:500;
-  box-shadow:0 8px 24px rgba(0,0,0,0.2);
-  transform:translateY(100px);opacity:0;
-  transition:all .3s;pointer-events:none;
-}
-.toast.show{transform:translateY(0);opacity:1;}
-.toast.error{background:#e74c3c;}
+/* ===== ICONS SVG ===== */
+.icon-svg { width: 1.2em; height: 1.2em; fill: currentColor; vertical-align: middle; }
 
-/* LOADER */
-.loading{
-  text-align:center;padding:3rem;color:var(--text2);
-  font-size:.9rem;
+/* ===== HERO ===== */
+.hero {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 80px 20px 40px;
 }
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+.crown-svg { width: 50px; height: 50px; fill: var(--gold); margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(201,168,76,0.5)); }
 
-@media(max-width:600px){
-  nav{padding:.8rem 1.2rem;}
-  .nav-links{display:none;}
-  .hero h1{font-size:2.4rem;}
-  .membres-grid{grid-template-columns:repeat(2,1fr);}
-  .collectes-grid{grid-template-columns:1fr;}
+.hero-label {
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 12px;
 }
-</style>
+
+.hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 10vw, 85px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+}
+
+.hero h1 em { font-style: italic; color: var(--gold2); font-weight: 400; }
+
+.gold-line {
+    width: 80px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 30px auto;
+}
+
+/* ===== DESIGN LIQUIDE GLACE (GLASSMORPHISM) ===== */
+.glass-btn {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+}
+
+.vote-info {
+    display: inline-flex; gap: 20px;
+    padding: 15px 30px;
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--muted);
+    flex-wrap: wrap; justify-content: center;
+}
+.vote-info b { color: var(--gold2); }
+
+/* ===== SEARCH ===== */
+.controls { position: relative; z-index: 2; max-width: 500px; margin: 0 auto 50px; padding: 0 20px; }
+.search-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 15px 25px;
+    color: white;
+    outline: none;
+}
+.search-wrap .icon { position: absolute; right: 25px; top: 50%; transform: translateY(-50%); color: var(--gold); }
+
+/* ===== GRID & CARDS ===== */
+.grid-section { position: relative; z-index: 2; max-width: 1300px; margin: 0 auto; padding: 0 20px 100px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+
+.card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.card:hover { transform: translateY(-10px); border-color: var(--gold); }
+
+.card-img { position: relative; aspect-ratio: 4/5; cursor: zoom-in; overflow: hidden; }
+.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.card:hover .card-img img { transform: scale(1.1); }
+
+.card-numero {
+    position: absolute; top: 15px; left: 15px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid var(--gold);
+    padding: 5px 15px; border-radius: 100px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: bold; color: var(--gold);
+}
+
+.card-body { padding: 20px; }
+.card-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; margin-bottom: 5px; color: var(--gold2); }
+.card-desc { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+.card-footer { display: flex; align-items: center; justify-content: space-between; }
+
+/* BOUTON VOTE DESIGN GLACE */
+.btn-vote {
+    background: rgba(201, 168, 76, 0.15);
+    border: 1px solid var(--gold);
+    color: var(--gold2);
+    padding: 10px 20px; border-radius: 100px;
+    cursor: pointer; font-weight: 600; font-size: 13px;
+    display: flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(5px);
+}
+.btn-vote:hover { background: var(--gold); color: black; }
+
+/* ===== LIGHTBOX (ZOOM PHOTO) ===== */
+#lightbox {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.95);
+    display: none; align-items: center; justify-content: center;
+    backdrop-filter: blur(15px);
+    opacity: 0; transition: opacity 0.3s ease;
+}
+#lightbox.active { display: flex; opacity: 1; }
+#lightbox img { max-width: 90%; max-height: 85vh; border: 2px solid var(--gold); border-radius: 10px; box-shadow: 0 0 50px rgba(201,168,76,0.3); }
+.close-lightbox {
+    position: absolute; top: 30px; right: 30px;
+    background: var(--gold); border: none; width: 45px; height: 45px;
+    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: black; font-size: 24px; transition: transform 0.2s;
+}
+.close-lightbox:hover { transform: rotate(90deg) scale(1.1); }
+
+/* ===== MODALS & INPUTS ===== */
+.overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+    display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.overlay.active { display: flex; }
+.modal {
+    background: #151515; border: 1px solid var(--border);
+    padding: 40px; border-radius: 30px; width: 100%; max-width: 450px;
+}
+.field {
+    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    padding: 15px; border-radius: 15px; color: white; margin-bottom: 15px;
+}
+.btn-main {
+    width: 100%; background: linear-gradient(135deg, var(--gold), #8a6d2b);
+    border: none; padding: 18px; border-radius: 100px;
+    font-weight: bold; color: black; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* ===== SÉCURITÉ TRANSACTION ===== */
+.field-txn-wrap { position: relative; margin-bottom: 6px; }
+.field-txn-wrap .field { margin-bottom: 0; padding-right: 46px; transition: border-color 0.25s, box-shadow 0.25s; }
+.field-txn-wrap .field.valid   { border-color: #34d399 !important; box-shadow: 0 0 0 3px rgba(52,211,153,0.12); }
+.field-txn-wrap .field.invalid { border-color: #f87171 !important; box-shadow: 0 0 0 3px rgba(248,113,113,0.12); }
+.field-txn-icon {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    display: none; width: 20px; height: 20px;
+}
+.field-txn-icon.show { display: block; }
+.txn-feedback {
+    font-size: 11px; font-weight: 500; line-height: 1.5;
+    padding: 8px 12px; border-radius: 10px; margin-top: 7px; margin-bottom: 14px;
+    display: none;
+}
+.txn-feedback.show { display: block; }
+.txn-feedback.err  { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #fca5a5; }
+.txn-feedback.ok   { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25); color: #6ee7b7; }
+.txn-feedback.warn { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.3); color: #fcd34d; }
+
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%,60%  { transform: translateX(-5px); }
+    40%,80%  { transform: translateX(5px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+/* ===== BOUTON FLOTTANT WHATSAPP ===== */
+.wa-float {
+    position: fixed;
+    bottom: 28px;
+    left: 28px; /* à gauche pour ne pas gêner les toasts à droite */
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.wa-bubble {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(37,211,102,0.18) 0%, rgba(18,140,64,0.12) 100%);
+    border: 1px solid rgba(37,211,102,0.45);
+    backdrop-filter: blur(16px) saturate(1.6);
+    -webkit-backdrop-filter: blur(16px) saturate(1.6);
+    display: flex; align-items: center; justify-content: center;
+    color: #4ade80;
+    box-shadow: 0 4px 24px rgba(37,211,102,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+    transition: all 0.28s cubic-bezier(.2,.8,.3,1);
+    position: relative;
+    flex-shrink: 0;
+}
+.wa-bubble::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 55%);
+}
+
+/* Pastille "aide" animée */
+.wa-dot {
+    position: absolute; top: 3px; right: 3px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: #34d399;
+    border: 2px solid #0a0a0a;
+    animation: waPulse 2.2s ease-in-out infinite;
+}
+@keyframes waPulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
+    50%      { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+}
+
+/* Étiquette texte qui apparaît au hover */
+.wa-label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    background: linear-gradient(135deg, rgba(18,18,18,0.95) 0%, rgba(10,10,10,0.9) 100%);
+    border: 1px solid rgba(37,211,102,0.3);
+    border-left: none;
+    border-radius: 0 50px 50px 0;
+    padding: 0;
+    font-size: 12px; font-weight: 600;
+    color: #4ade80;
+    transition: max-width 0.35s cubic-bezier(.2,.8,.3,1), padding 0.35s;
+    backdrop-filter: blur(12px);
+    margin-left: -10px;
+    padding-left: 0;
+    line-height: 52px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+
+.wa-float:hover .wa-label {
+    max-width: 200px;
+    padding: 0 18px 0 18px;
+}
+.wa-float:hover .wa-bubble {
+    background: linear-gradient(135deg, rgba(37,211,102,0.28) 0%, rgba(18,140,64,0.2) 100%);
+    border-color: rgba(37,211,102,0.7);
+    box-shadow: 0 8px 32px rgba(37,211,102,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    transform: scale(1.06);
+}
+
+@media (max-width: 600px) {
+    .wa-float { bottom: 20px; left: 16px; }
+    .wa-bubble { width: 46px; height: 46px; }
+}
+
+/* ===== FIN WHATSAPP ===== */
+@media (max-width: 600px) {
+    .grid { 
+        grid-template-columns: repeat(2, 1fr); /* Force 2 colonnes */
+        gap: 12px; /* Réduit l'espace entre les cartes pour gagner de la place */
+    }
+    .hero h1 { font-size: 42px; } /* Ajuste le titre pour mobile */
+    .card-body { padding: 12px; } /* Réduit les marges internes des cartes */
+    .card-name { font-size: 18px; } /* Rend le nom plus petit pour éviter les retours à la ligne */
+    .btn-vote { padding: 8px 12px; font-size: 11px; } /* Ajuste le bouton */
+}
+
+
+ /* Désactiver l'affichage des boutons de vote */
+.btn-vote {
+    display: none !important;
+} 
+
+/* Optionnel : masquer aussi les infos de prix en haut */
+.vote-info {
+    display: none !important;
+} 
+
+    </style>
 </head>
 <body>
 
-<div class="bg-mesh"></div>
+<svg style="display: none;">
+    <symbol id="icon-crown" viewBox="0 0 24 24">
+        <path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z"/>
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24">
+        <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.41,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.59,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24">
+        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+    </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24">
+        <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+    </symbol>
+</svg>
 
-<!-- PROFIL PAGE -->
-<div id="profil-page">
-  <button class="close-profil" onclick="closeProfil()">✕</button>
-  <div class="profil-card" id="profil-content"></div>
+<div id="lightbox">
+    <button class="close-lightbox" onclick="closeLightbox()">
+        <svg class="icon-svg"><use xlink:href="#icon-close"></use></svg>
+    </button>
+    <img id="lightbox-img" src="" alt="Zoom Candidate">
 </div>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="2"/>
-      <path d="M8 16c2-4 10-4 12 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="10" cy="12" r="1.5" fill="currentColor"/>
-      <circle cx="18" cy="12" r="1.5" fill="currentColor"/>
-    </svg>
-    Clean<span>Street</span>
-  </div>
-  <div class="nav-links">
-    <a href="#activites">Activités</a>
-    <a href="#dons">Faire un don</a>
-    <a href="#membres">Membres</a>
-  </div>
-  <button class="theme-btn" onclick="toggleTheme()" title="Mode sombre/clair">
-    <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="5"/>
-      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-    </svg>
-  </button>
-</nav>
-
-<!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    Association engagée pour des villes propres
-  </div>
-  <h1>Ensemble pour des<br/><em>rues plus propres</em></h1>
-  <p id="hero-desc">Nous œuvrons chaque jour pour la propreté de nos communes. Rejoignez-nous ou soutenez notre cause en faisant un don.</p>
-  <div class="hero-btns">
-    <a href="#dons" class="btn btn-primary">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      Faire un don
-    </a>
-    <a href="#membres" class="btn btn-glass">Voir l'équipe</a>
-  </div>
-</div>
-
-<!-- SLIDER -->
-<div class="slider-section" id="activites">
-  <div class="section-title">Nos activités</div>
-  <div class="section-sub">Ce que nous faisons sur le terrain</div>
-  <div class="slider-wrap" id="slider-wrap">
-    <div class="loading">Chargement des images…</div>
-  </div>
-  <div class="slide-dots" id="slider-dots"></div>
-</div>
-
-<!-- DONS -->
-<section id="dons">
-  <div class="section-title">Soutenez nos collectes</div>
-  <div class="section-sub">Chaque don contribue à garder nos rues propres</div>
-  <div class="collectes-grid" id="collectes-grid">
-    <div class="loading">Chargement…</div>
-  </div>
-
-  <div style="margin-top:3rem;">
-    <div class="section-title" style="font-size:1.6rem;">Faire un don</div>
-    <div class="section-sub">Paiement via Wave — simple et sécurisé</div>
-    <div class="don-form">
-      <div class="form-group">
-        <label>Votre prénom et nom</label>
-        <input type="text" id="don-nom" placeholder="Ex: Kouamé Yao">
-      </div>
-      <div class="form-group">
-        <label>Choisir une collecte</label>
-        <select id="don-collecte"></select>
-      </div>
-      <div class="form-group">
-        <label>Montant (FCFA)</label>
-        <input type="number" id="don-montant" placeholder="Ex: 1000" min="100">
-      </div>
-      <div style="margin:1.2rem 0;">
-        <p style="font-size:.85rem;color:var(--text2);margin-bottom:.8rem;">1. Cliquez sur le bouton Wave pour payer :</p>
-        <a href="#" id="wave-btn" class="wave-link" target="_blank">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          Payer avec Wave
-        </a>
-      </div>
-      <div class="form-group">
-        <label>2. Entrez l'ID de la transaction Wave</label>
-        <input type="text" id="don-txid" placeholder="Ex: TXN-XXXXXXXXXX">
-      </div>
-      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="soumettredon()">
-        Valider mon don
-      </button>
+    <svg class="crown-svg"><use xlink:href="#icon-crown"></use></svg>
+    <p class="hero-label">Concours Officiel 2026</p>
+    <h1>Queen <em>Beauty</em></h1>
+    <h1>1st edition</h1>
+    <p class="hero-sub" style="color: var(--muted); max-width: 500px; margin: 15px auto; font-size: 14px; line-height: 1.6;">L'élégance est la seule beauté qui ne se fane jamais. Soutenez votre favorite vers le trône.</p>
+    <div class="gold-line"></div>
+    <div class="vote-info glass-btn">
+        <span><b style="color:var(--gold)">OR</b> Premier vote : 100 FCFA</span>
+        <span style="opacity: 0.3">|</span>
+        <span><b style="color:var(--rose)">ROSE</b> Suivants : 25 FCFA</span>
     </div>
-  </div>
-</section>
+</div>
 
-<!-- MEMBRES -->
-<section id="membres">
-  <div class="section-title">Notre équipe</div>
-  <div class="section-sub">Les membres qui font vivre l'association</div>
-  <div class="membres-grid" id="membres-grid">
-    <div class="loading">Chargement…</div>
-  </div>
-</section>
+<div class="controls">
+    <div class="search-wrap">
+        <input type="text" id="search" placeholder="Recherche..." oninput="filtrer()">
+        <span class="icon"><svg class="icon-svg"><use xlink:href="#icon-search"></use></svg></span>
+    </div>
+</div>
 
-<footer>
-  <p id="footer-nom">Clean Street</p>
-  <p style="margin-top:.5rem;font-size:.8rem;">© 2025 — Tous droits réservés</p>
-</footer>
+<div class="grid-section">
+    <p id="grid-count" style="text-align:center; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:30px; opacity:0.7;"></p>
+    <div class="grid" id="grid">
+        </div>
+</div>
 
-<div class="toast" id="toast"></div>
+<div class="overlay" id="modal-login">
+    <div class="modal">
+        <h2 style="font-family:'Cormorant Garamond'; font-size:32px; text-align:center; color:var(--gold2); margin-bottom:10px;">Identification</h2>
+        <div id="login-for" style="margin-bottom:20px; text-align:center; font-size:14px; color:var(--muted);"></div>
+        <input type="tel" class="field" id="login-tel" placeholder="Numéro de téléphone">
+        <input type="email" class="field" id="login-email" placeholder="Adresse E-mail (Optionnel)">
+        <button class="btn-main" onclick="submitLogin()">Continuer l'expérience</button>
+        <button onclick="closeModal('modal-login')" style="background:none; border:none; color:var(--muted); width:100%; margin-top:15px; cursor:pointer;">Annuler</button>
+    </div>
+</div>
+
+<div class="overlay" id="modal-vote">
+    <div class="modal">
+        <div id="modal-vote-content"></div>
+    </div>
+</div>
+
+<!-- ===== BOUTON FLOTTANT WHATSAPP ===== -->
+<!-- Remplace XXXXXXXXXXX par ton numéro WhatsApp avec indicatif pays, ex: 2250700000000 -->
+<a class="wa-float"
+   href="https://wa.me/2250504771284?text=Bonjour%2C%20j'ai%20besoin%20d'aide%20pour%20voter%20sur%20le%20concours%20Miss%20Beauté."
+   target="_blank"
+   rel="noopener"
+   title="Besoin d'aide ? Contactez-nous sur WhatsApp">
+    <div class="wa-bubble">
+        <!-- Icône WhatsApp officielle SVG -->
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="wa-dot"></span>
+    </div>
+    <span class="wa-label">Besoin d'aide ?</span>
+</a>
+
+<div class="toast-container" id="toasts" style="position:fixed; bottom:20px; right:20px; z-index:5000;"></div>
 
 <script>
-const API = "https://ton-backend.onrender.com";
-let waveLink = 'https://pay.wave.com/m/M_ci_zuXWh0fj9YGV/c/ci/';
-let collectes = [];
-let slides = [];
-let currentSlide = 0;
-let slideInterval;
+// ==========================================
+// CONFIG & STATE
+// ==========================================
+const API       = "https://backend-xxgf.onrender.com";
+const WAVE_LINK = "https://pay.wave.com/m/M_ci_zuXWh0fj9YGV/c/ci/";
 
-// THEME
-function toggleTheme(){
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  localStorage.setItem('theme', isDark ? 'light' : 'dark');
-  updateThemeIcon(!isDark);
-}
-function updateThemeIcon(dark){
-  const icon = document.getElementById('theme-icon');
-  if(dark){
-    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-  } else {
-    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
-  }
-}
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', savedTheme);
-updateThemeIcon(savedTheme === 'dark');
+let allCandidates = [];
+let currentVoter  = null;
+let targetCand    = null;
 
-// TOAST
-function showToast(msg, err=false){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (err?' error':'');
-  setTimeout(()=>t.className='toast',3000);
+// ==========================================
+// SÉCURITÉ — VALIDATION DES IDs DE TRANSACTION
+// ==========================================
+
+// Format attendu : une lettre, un underscore, puis 10+ caractères alphanumériques
+// Avec tolérance d'un tiret optionnel entre le 4e et 6e caractère après l'underscore
+// Exemples valides :
+//   T_R5553BC34EDGXUZF        (sans tiret)
+//   T_URZJC-BEKF2RXRY4H      (avec tiret entre pos 4-6)
+//   T_URZ JC-BEKF2RXRY4H     (espaces tolérés, nettoyés automatiquement)
+const TXN_REGEX = /^[A-Za-z]_[A-Za-z0-9]{3,6}-?[A-Za-z0-9]{6,}$/;
+
+// Clé localStorage pour stocker les IDs déjà utilisés
+const USED_TXN_KEY = 'miss_used_txn_ids';
+
+function getUsedTxnIds() {
+    try { return JSON.parse(localStorage.getItem(USED_TXN_KEY) || '[]'); }
+    catch { return []; }
 }
 
-// LOAD DATA
-async function loadData(){
-  try {
-    const r = await fetch(`${API}/cs/accueil`);
-    const d = await r.json();
-    if(!d.success) return;
-
-    // config
-    if(d.config.texte_accueil) document.getElementById('hero-desc').textContent = d.config.texte_accueil;
-    if(d.config.nom_asso){
-      document.querySelector('.nav-logo').innerHTML = `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="2"/><path d="M8 16c2-4 10-4 12 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/></svg>${d.config.nom_asso}`;
-      document.title = d.config.nom_asso;
-      document.getElementById('footer-nom').textContent = d.config.nom_asso;
+function saveUsedTxnId(id) {
+    const ids = getUsedTxnIds();
+    if (!ids.includes(id)) {
+        ids.push(id);
+        // Garder max 200 entrées pour ne pas surcharger le localStorage
+        if (ids.length > 200) ids.splice(0, ids.length - 200);
+        localStorage.setItem(USED_TXN_KEY, JSON.stringify(ids));
     }
-    if(d.config.lien_wave) {
-      waveLink = d.config.lien_wave;
-      document.getElementById('wave-btn').href = waveLink || '#';
+}
+
+/**
+ * Comptage de caractères en même position (similarité positionnelle)
+ * Ex: "T_R5553BC34EDGXUZF" vs "T_R5553BC34EDGXUZA" → 17 correspondances
+ */
+function countPositionalMatches(a, b) {
+    const len = Math.min(a.length, b.length);
+    let matches = 0;
+    for (let i = 0; i < len; i++) {
+        if (a[i] === b[i]) matches++;
+    }
+    return matches;
+}
+
+const SIMILARITY_THRESHOLD = 10; // ≥10 caractères en même position = suspicion
+
+/**
+ * Vérifie un ID de transaction.
+ * Retourne { valid: bool, code: string, message: string }
+ */
+function validerTxnId(txnId) {
+    // Nettoyer les espaces (tolérés à la saisie, retirés avant validation)
+    const raw = txnId.replace(/\s/g, '').trim();
+
+    // 1. Champ vide
+    if (!raw) {
+        return { valid: false, code: 'empty', message: 'Veuillez coller votre référence de paiement Wave.' };
     }
 
-    // slider
-    slides = d.images || [];
-    renderSlider();
+    // 2. Format invalide
+    if (!TXN_REGEX.test(raw)) {
+        return {
+            valid: false,
+            code: 'format',
+            message: `Format invalide. Une référence Wave ressemble à : T_R5553BC34EDGXUZF\n(une lettre, un tiret bas, puis au moins 10 caractères alphanumériques).`
+        };
+    }
 
-    // collectes
-    collectes = d.collectes || [];
-    renderCollectes();
+    // 3. ID déjà utilisé exactement
+    const usedIds = getUsedTxnIds();
+    if (usedIds.includes(raw)) {
+        return {
+            valid: false,
+            code: 'duplicate',
+            message: `Cette référence a déjà été soumise. Chaque transaction Wave est unique et ne peut être utilisée qu'une seule fois.`
+        };
+    }
 
-    // membres
-    renderMembres(d.membres || []);
+    // 4. Trop similaire à un ID déjà utilisé (fraude par variation)
+    for (const used of usedIds) {
+        const matches = countPositionalMatches(raw.toUpperCase(), used.toUpperCase());
+        if (matches >= SIMILARITY_THRESHOLD) {
+            return {
+                valid: false,
+                code: 'similar',
+                message: `Cette référence ressemble fortement à une transaction déjà utilisée (${matches} caractères identiques). Veuillez utiliser une vraie référence Wave.`
+            };
+        }
+    }
 
-  } catch(e){ console.error(e); }
+    return { valid: true, code: 'ok', message: 'Référence valide.' };
 }
 
-// SLIDER
-function renderSlider(){
-  const wrap = document.getElementById('slider-wrap');
-  const dots = document.getElementById('slider-dots');
-  if(slides.length === 0){
-    wrap.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text2);font-size:.9rem;">Aucune image pour le moment</div>';
-    return;
-  }
-  wrap.innerHTML = slides.map((s,i)=>`
-    <div class="slide ${i===0?'active':''}" id="slide-${i}">
-      <img src="${s.image_url}" alt="${s.legende||''}" onerror="this.style.display='none'">
-      ${s.legende?`<div class="slide-caption">${s.legende}</div>`:''}
-    </div>
-  `).join('');
-  dots.innerHTML = slides.map((_,i)=>`<div class="dot ${i===0?'active':''}" onclick="goSlide(${i})"></div>`).join('');
-  clearInterval(slideInterval);
-  slideInterval = setInterval(()=>goSlide((currentSlide+1)%slides.length), 4000);
-}
-function goSlide(n){
-  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===n));
-  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===n));
-  currentSlide=n;
-}
+// ==========================================
+// VALIDATION EN TEMPS RÉEL SUR LE CHAMP
+// ==========================================
+function attachTxnValidation(inputId, feedbackId) {
+    const input = document.getElementById(inputId);
+    const feedback = document.getElementById(feedbackId);
+    if (!input || !feedback) return;
 
-// COLLECTES
-function renderCollectes(){
-  const g = document.getElementById('collectes-grid');
-  const sel = document.getElementById('don-collecte');
-  if(collectes.length===0){
-    g.innerHTML = '<div class="loading">Aucune collecte active pour le moment.</div>';
-    return;
-  }
-  g.innerHTML = collectes.map(c=>{
-    const pct = Math.min(100, Math.round((c.montant_actuel/c.objectif)*100)||0);
-    return `<div class="collecte-card">
-      <div class="collecte-nom">${c.nom}</div>
-      <div class="collecte-progress-wrap"><div class="collecte-progress" style="width:${pct}%"></div></div>
-      <div class="collecte-amounts">
-        <span><strong>${Number(c.montant_actuel).toLocaleString()} FCFA</strong> collectés</span>
-        <span>Objectif: ${Number(c.objectif).toLocaleString()} FCFA</span>
-      </div>
-      <div style="font-size:.8rem;color:var(--accent);margin-top:.5rem;font-weight:600;">${pct}% atteint</div>
-    </div>`;
-  }).join('');
-  sel.innerHTML = collectes.map(c=>`<option value="${c.id}">${c.nom}</option>`).join('');
-}
+    // Icône SVG check vert
+    const iconOk = `<svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    // Icône SVG croix rouge
+    const iconErr = `<svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
 
-// MEMBRES
-function renderMembres(membres){
-  const g = document.getElementById('membres-grid');
-  if(membres.length===0){
-    g.innerHTML = '<div class="loading">Aucun membre pour le moment.</div>';
-    return;
-  }
-  g.innerHTML = membres.map(m=>`
-    <div class="membre-card" onclick="voirProfil('${m.id_unique}')">
-      <img class="membre-avatar" src="${m.photo_url||'https://ui-avatars.com/api/?name='+encodeURIComponent(m.nom)+'&background=1a7f5a&color=fff&size=80'}" alt="${m.nom}">
-      <div class="membre-nom">${m.nom}</div>
-      <div class="membre-role">${m.role||'Membre'}</div>
-      <span class="membre-qr">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="4" height="4" rx=".5"/></svg>
-        Profil
-      </span>
-    </div>
-  `).join('');
-}
+    let iconEl = input.parentNode.querySelector('.field-txn-icon');
+    if (!iconEl) {
+        iconEl = document.createElement('span');
+        iconEl.className = 'field-txn-icon';
+        input.parentNode.appendChild(iconEl);
+    }
 
-// PROFIL MEMBRE
-async function voirProfil(id){
-  try {
-    const r = await fetch(`${API}/cs/membre/${id}`);
-    const d = await r.json();
-    if(!d.success) return;
-    const m = d.membre;
-    const url = window.location.origin + '/membre/' + m.id_unique;
-    document.getElementById('profil-content').innerHTML = `
-      <img class="profil-avatar" src="${m.photo_url||'https://ui-avatars.com/api/?name='+encodeURIComponent(m.nom)+'&background=1a7f5a&color=fff&size=120'}" alt="${m.nom}">
-      <div class="profil-nom">${m.nom}</div>
-      <div class="profil-role">${m.role||'Membre'}</div>
-      <p class="profil-desc">${m.description||'Membre de l\'association Clean Street.'}</p>
-      <div class="profil-id">ID: ${m.id_unique}</div>
-      <button class="btn btn-glass" style="width:100%;justify-content:center;margin-top:.5rem;" onclick="copierLien('${url}')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        Copier le lien profil
-      </button>
-    `;
-    document.getElementById('profil-page').classList.add('show');
-  } catch(e){ showToast('Erreur', true); }
-}
-function closeProfil(){ document.getElementById('profil-page').classList.remove('show'); }
-function copierLien(url){
-  navigator.clipboard.writeText(url).then(()=>showToast('Lien copié !'));
-}
+    input.addEventListener('input', () => {
+        const val = input.value.trim();
+        if (!val) {
+            input.classList.remove('valid', 'invalid');
+            feedback.className = 'txn-feedback';
+            iconEl.className = 'field-txn-icon';
+            return;
+        }
 
-// DON
-async function soumettredon(){
-  const nom = document.getElementById('don-nom').value.trim();
-  const collecte_id = document.getElementById('don-collecte').value;
-  const montant = parseFloat(document.getElementById('don-montant').value);
-  const txid = document.getElementById('don-txid').value.trim();
-  if(!nom||!montant||!txid||!collecte_id) return showToast('Remplissez tous les champs', true);
-  if(montant < 100) return showToast('Montant minimum : 100 FCFA', true);
-  try {
-    const r = await fetch(`${API}/cs/don`, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({collecte_id, nom_donateur:nom, montant, transaction_id:txid})
+        const result = validerTxnId(val);
+        if (result.valid) {
+            input.classList.add('valid'); input.classList.remove('invalid');
+            feedback.className = 'txn-feedback ok show';
+            feedback.textContent = '✓ Référence valide';
+            iconEl.innerHTML = iconOk; iconEl.className = 'field-txn-icon show';
+        } else {
+            input.classList.add('invalid'); input.classList.remove('valid');
+            feedback.className = `txn-feedback ${result.code === 'format' ? 'warn' : 'err'} show`;
+            feedback.textContent = result.message;
+            iconEl.innerHTML = iconErr; iconEl.className = 'field-txn-icon show';
+        }
     });
-    const d = await r.json();
-    if(d.success){
-      showToast('Don enregistré ! En attente de validation.');
-      document.getElementById('don-nom').value='';
-      document.getElementById('don-montant').value='';
-      document.getElementById('don-txid').value='';
-    } else showToast(d.message||'Erreur', true);
-  } catch(e){ showToast('Erreur réseau', true); }
+
+    // Envelopper le champ s'il n'est pas déjà enveloppé
+    if (!input.parentNode.classList.contains('field-txn-wrap')) {
+        const wrap = document.createElement('div');
+        wrap.className = 'field-txn-wrap';
+        input.parentNode.insertBefore(wrap, input);
+        wrap.appendChild(input);
+        wrap.appendChild(iconEl);
+    }
 }
 
-// CHECK URL POUR PROFIL DIRECT
-function checkUrlProfil(){
-  const path = window.location.pathname;
-  const match = path.match(/\/membre\/([A-Z0-9]+)/i);
-  if(match) voirProfil(match[1]);
+// ==========================================
+// INIT
+// ==========================================
+window.onload = async () => {
+    await chargerCandidates();
+    const stored = localStorage.getItem('miss_voter');
+    if (stored) {
+        try {
+            const v = JSON.parse(stored);
+            const r = await fetch(`${API}/miss/voter/${v.id}`);
+            if (r.ok) {
+                const data = await r.json();
+                currentVoter = data.voter;
+                localStorage.setItem('miss_voter', JSON.stringify(currentVoter));
+            }
+        } catch (e) {}
+    }
+};
+
+// ==========================================
+// CHARGEMENT CANDIDATES
+// ==========================================
+async function chargerCandidates() {
+    try {
+        const r = await fetch(`${API}/miss/candidates`);
+        const data = await r.json();
+        allCandidates = data.candidates || [];
+        renderGrid(allCandidates);
+    } catch (e) {
+        document.getElementById('grid').innerHTML = `<p style="text-align:center; grid-column:1/-1;">Erreur de connexion au serveur.</p>`;
+    }
 }
 
-loadData();
-checkUrlProfil();
+// ==========================================
+// RENDER GRID
+// ==========================================
+function renderGrid(list) {
+    const sorted = [...list].sort((a, b) => b.votes - a.votes);
+    document.getElementById('grid-count').textContent = `${sorted.length} CANDIDATES `;
+
+    document.getElementById('grid').innerHTML = sorted.map((c, i) => `
+        <div class="card" style="animation: fadeUp 0.6s ease forwards ${i * 0.1}s; opacity:0;">
+            <div class="card-img" onclick="openLightbox('${c.photo_url || ''}')">
+                ${c.photo_url
+                    ? `<img src="${c.photo_url}" alt="${c.nom}">`
+                    : `<div style="height:100%; display:flex; align-items:center; justify-content:center; background:#1a1a1a;"><svg style="width:50px; fill:#333;"><use xlink:href="#icon-crown"></use></svg></div>`
+                }
+                <span class="card-numero">N° ${String(c.numero).padStart(2,'0')}</span>
+            </div>
+            <div class="card-body">
+                <div class="card-name">${c.nom}</div>
+                <div class="card-desc">${c.description || 'Candidate Officielle'}</div>
+                <div class="card-footer">
+                    <div style="font-size:14px; color:var(--rose); font-weight:bold; display:flex; align-items:center; gap:5px;">
+                        <svg class="icon-svg"><use xlink:href="#icon-heart"></use></svg>
+                        ${parseInt(c.votes || 0).toLocaleString()}
+                    </div>
+                    <button class="btn-vote" onclick="ouvrirVote(${c.id})">VOTER</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// LIGHTBOX
+// ==========================================
+function openLightbox(url) {
+    if (!url) return;
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightbox-img').src = url;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ==========================================
+// VOTE
+// ==========================================
+function ouvrirVote(candidateId) {
+    targetCand = allCandidates.find(c => c.id === candidateId);
+    if (!targetCand) return;
+    if (!currentVoter) {
+        document.getElementById('login-for').innerHTML = `Vote pour <b>${targetCand.nom}</b>`;
+        openModal('modal-login');
+    } else {
+        ouvrirModalVote();
+    }
+}
+
+async function submitLogin() {
+    const tel   = document.getElementById('login-tel').value;
+    const email = document.getElementById('login-email').value;
+    if (!tel && !email) return toast("Veuillez remplir un champ", false);
+    try {
+        const r = await fetch(`${API}/miss/voter/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ telephone: tel || null, email: email || null })
+        });
+        const data = await r.json();
+        if (data.success) {
+            currentVoter = data.voter;
+            localStorage.setItem('miss_voter', JSON.stringify(currentVoter));
+            closeModal('modal-login');
+            ouvrirModalVote();
+        }
+    } catch(e) { toast("Erreur de connexion", false); }
+}
+
+function ouvrirModalVote() {
+    const isFirst = !currentVoter.a_paye_premier_vote;
+    const c = targetCand;
+    let html = `
+        <h2 style="font-family:'Cormorant Garamond'; font-size:28px; text-align:center; color:var(--gold2); margin-bottom:20px;">Soutenir ${c.nom}</h2>
+    `;
+
+    if (isFirst) {
+        html += `
+            <div style="background:rgba(201,168,76,0.1); padding:20px; border-radius:15px; text-align:center; border:1px solid var(--gold); margin-bottom:20px;">
+                <div style="font-size:12px; text-transform:uppercase; letter-spacing:1px;">Premier Vote</div>
+                <div style="font-size:32px; font-weight:bold; color:var(--gold2);">100 FCFA</div>
+            </div>
+            <a href="${WAVE_LINK}?amount=100" target="_blank" class="btn-main" style="display:block; text-decoration:none; text-align:center; margin-bottom:15px; background:#0098df; color:white;">Payer via WAVE</a>
+            <label style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:6px;">Référence de transaction</label>
+            <div class="field-txn-wrap">
+              <input type="text" class="field" id="txn-id-premier" placeholder="Ex : T_R5553BC34EDGXUZF" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="txn-feedback" id="txn-feedback-premier"></div>
+            <button class="btn-main" onclick="soumettreDemande(1, 100)">Valider mon vote</button>
+        `;
+    } else {
+        html += `
+            <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:15px; margin-bottom:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <span>Nombre de votes</span>
+                    <input type="number" id="qty-votes" value="1" min="1" oninput="updateCalc()" style="width:60px; background:black; border:1px solid var(--gold); color:white; padding:5px; border-radius:5px;">
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:bold;">
+                    <span>Total</span>
+                    <span id="calc-total" style="color:var(--gold2);">25 FCFA</span>
+                </div>
+            </div>
+            <a href="${WAVE_LINK}" id="wave-btn-multi" target="_blank" class="btn-main" style="display:block; text-decoration:none; text-align:center; margin-bottom:15px; background:#0098df; color:white;">Payer via WAVE</a>
+            <label style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); display:block; margin-bottom:6px;">Référence de transaction</label>
+            <div class="field-txn-wrap">
+              <input type="text" class="field" id="txn-id-multi" placeholder="Ex : T_R5553BC34EDGXUZF" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="txn-feedback" id="txn-feedback-multi"></div>
+            <button class="btn-main" onclick="soumettreDemandeMulti()">Confirmer les votes</button>
+        `;
+    }
+    html += `<button onclick="closeModal('modal-vote')" style="background:none; border:none; color:var(--muted); width:100%; margin-top:15px; cursor:pointer;">Retour</button>`;
+
+    document.getElementById('modal-vote-content').innerHTML = html;
+    openModal('modal-vote');
+
+    // Attacher la validation en temps réel APRÈS injection du HTML
+    if (isFirst) {
+        attachTxnValidation('txn-id-premier', 'txn-feedback-premier');
+    } else {
+        attachTxnValidation('txn-id-multi', 'txn-feedback-multi');
+        updateCalc();
+    }
+}
+
+function updateCalc() {
+    const qty = Math.max(1, parseInt(document.getElementById('qty-votes').value) || 1);
+    const total = qty * 25;
+    document.getElementById('calc-total').textContent = total + ' FCFA';
+    document.getElementById('wave-btn-multi').href = `${WAVE_LINK}?amount=${total}`;
+}
+
+// ==========================================
+// SOUMISSION SÉCURISÉE
+// ==========================================
+async function soumettreDemande(nb, mont) {
+    const inputEl   = document.getElementById('txn-id-premier') || document.getElementById('txn-id-multi');
+    const feedbackEl = document.getElementById('txn-feedback-premier') || document.getElementById('txn-feedback-multi');
+    const tid = (inputEl ? inputEl.value : '').replace(/\s/g, '').trim();
+
+    // Validation complète avant envoi
+    const check = validerTxnId(tid);
+    if (!check.valid) {
+        if (inputEl) {
+            inputEl.classList.add('invalid', 'shake');
+            setTimeout(() => inputEl.classList.remove('shake'), 450);
+        }
+        if (feedbackEl) {
+            feedbackEl.className = `txn-feedback ${check.code === 'format' ? 'warn' : 'err'} show`;
+            feedbackEl.textContent = check.message;
+        }
+        toast(check.code === 'duplicate' ? '⛔ Référence déjà utilisée' : check.code === 'similar' ? '⚠️ Référence suspecte' : '❌ Référence invalide', false);
+        return;
+    }
+
+    try {
+        const r = await fetch(`${API}/miss/voter/demande-vote`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                voter_id:          currentVoter.id,
+                candidate_numero:  targetCand.numero,
+                nombre_votes:      nb,
+                montant:           mont,
+                transaction_id:    tid
+            })
+        });
+        const data = await r.json();
+        if (data.success) {
+            // Enregistrer l'ID localement pour bloquer les réutilisations
+            saveUsedTxnId(tid);
+
+            document.getElementById('modal-vote-content').innerHTML = `
+                <div style="text-align:center; padding:20px;">
+                    <svg class="icon-svg" style="width:60px; height:60px; color:var(--gold); margin-bottom:20px;"><use xlink:href="#icon-crown"></use></svg>
+                    <h3 style="color:var(--gold2); font-family:'Cormorant Garamond'; font-size:24px;">Demande Reçue</h3>
+                    <p style="font-size:14px; color:var(--muted); margin:15px 0;">Votre vote est en cours de validation par nos services.</p>
+                    <button class="btn-main" onclick="closeModal('modal-vote')">Fermer</button>
+                </div>
+            `;
+            currentVoter.a_paye_premier_vote = true;
+            localStorage.setItem('miss_voter', JSON.stringify(currentVoter));
+        } else {
+            toast(data.message || "Erreur lors de l'envoi.", false);
+        }
+    } catch(e) { toast("Erreur réseau", false); }
+}
+
+function soumettreDemandeMulti() {
+    const qty = Math.max(1, parseInt(document.getElementById('qty-votes').value) || 1);
+    soumettreDemande(qty, qty * 25);
+}
+
+// ==========================================
+// FILTRE RECHERCHE
+// ==========================================
+function filtrer() {
+    const q = document.getElementById('search').value.toLowerCase();
+    renderGrid(allCandidates.filter(c => c.nom.toLowerCase().includes(q) || String(c.numero).includes(q)));
+}
+
+// ==========================================
+// MODALS & TOAST
+// ==========================================
+function openModal(id)  { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+function toast(msg, ok = true) {
+    const t = document.createElement('div');
+    t.style.cssText = `background:${ok ? '#1a4a1a' : '#4a1a1a'}; color:white; padding:15px 25px; border-radius:10px; margin-top:10px; border:1px solid ${ok ? '#2a6a2a' : '#6a2a2a'}; font-size:13px;`;
+    t.textContent = msg;
+    document.getElementById('toasts').appendChild(t);
+    setTimeout(() => t.remove(), 5000);
+}
+
+// Fermer lightbox avec Echap
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
+
+<style>
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
 </body>
 </html>
