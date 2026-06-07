@@ -8,8 +8,8 @@
     <style>
 /* ===== VARIABLES & THÈME NOIR/OR ===== */
 :root {
-    --gold:    #c9a84c;
-    --gold2:   #e8c97a;
+    --gold:    #f921d1;
+    --gold2:   #f921d1;
     --rose:    #f2c4ce;
     --deep:    #0a0a0a; /* Noir pur */
     --surface: rgba(30, 30, 30, 0.6);
@@ -27,15 +27,16 @@ body {
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
-    background-image: radial-gradient(circle at 50% -20%, #2a1b10 0%, #0a0a0a 100%);
+    background-image: radial-gradient(circle at 50% -20%, #1a0a14 0%, #0a0a0a 100%);
 }
 
+/* Effet grain de luxe */
 /* Effet grain de luxe */
 body::after {
     content: "";
     position: fixed; inset: 0;
     background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
-    opacity: 0.1; pointer-events: none; z-index: 1;
+    opacity: 0.08; pointer-events: none; z-index: 1;
 }
 
 /* ===== ICONS SVG ===== */
@@ -96,14 +97,50 @@ body::after {
 
 /* ===== SEARCH ===== */
 .controls { position: relative; z-index: 2; max-width: 500px; margin: 0 auto 50px; padding: 0 20px; }
+.search-wrap {
+    position: relative;
+}
+
 .search-wrap input {
     width: 100%;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+    border: 1px solid rgba(249, 33, 209, 0.25);
     border-radius: 100px;
-    padding: 15px 25px;
+    padding: 15px 50px 15px 25px;
     color: white;
     outline: none;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+}
+
+.search-wrap input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+    font-style: italic;
+}
+
+.search-wrap input:focus {
+    background: rgba(255, 255, 255, 0.11);
+    border-color: rgba(249, 33, 209, 0.6);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 3px rgba(249, 33, 209, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.search-wrap .icon {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    pointer-events: none;
 }
 .search-wrap .icon { position: absolute; right: 25px; top: 50%; transform: translateY(-50%); color: var(--gold); }
 
@@ -326,6 +363,8 @@ body::after {
     </style>
 </head>
 <body>
+
+    <canvas id="petal-canvas" style="position:fixed; inset:0; z-index:0; pointer-events:none;"></canvas>
 
 <svg style="display: none;">
     <symbol id="icon-crown" viewBox="0 0 24 24">
@@ -826,6 +865,97 @@ function toast(msg, ok = true) {
     document.getElementById('toasts').appendChild(t);
     setTimeout(() => t.remove(), 5000);
 }
+
+
+
+
+    // ===== ANIMATION PÉTALES DE ROSES =====
+(function() {
+    const canvas = document.getElementById('petal-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width  = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const COLORS = [
+        'rgba(249, 33, 209, 0.55)',
+        'rgba(251, 68, 187, 0.45)',
+        'rgba(242, 196, 206, 0.35)',
+        'rgba(249, 33, 209, 0.25)',
+        'rgba(180, 20, 150, 0.4)',
+    ];
+
+    function randomBetween(a, b) { return a + Math.random() * (b - a); }
+
+    class Petal {
+        constructor() { this.reset(true); }
+
+        reset(init = false) {
+            this.x     = randomBetween(0, canvas.width);
+            this.y     = init ? randomBetween(-200, canvas.height) : randomBetween(-80, -10);
+            this.size  = randomBetween(6, 18);
+            this.speedY = randomBetween(0.4, 1.2);
+            this.speedX = randomBetween(-0.5, 0.5);
+            this.rot    = randomBetween(0, Math.PI * 2);
+            this.rotSpeed = randomBetween(-0.015, 0.015);
+            this.sway   = randomBetween(0.3, 1.2);
+            this.swayOffset = randomBetween(0, Math.PI * 2);
+            this.opacity = randomBetween(0.4, 0.9);
+            this.color  = COLORS[Math.floor(Math.random() * COLORS.length)];
+            this.tick   = 0;
+        }
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rot);
+            ctx.globalAlpha = this.opacity;
+
+            // Forme pétale ovale
+            ctx.beginPath();
+            ctx.scale(1, 1.6);
+            ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.shadowColor = 'rgba(249, 33, 209, 0.4)';
+            ctx.shadowBlur  = 8;
+            ctx.fill();
+
+            // Reflet léger pour effet nacré
+            ctx.beginPath();
+            ctx.ellipse(
+                -this.size * 0.12, -this.size * 0.18,
+                this.size * 0.22, this.size * 0.12,
+                -0.5, 0, Math.PI * 2
+            );
+            ctx.fillStyle = 'rgba(255,255,255,0.25)';
+            ctx.shadowBlur = 0;
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        update() {
+            this.tick++;
+            this.y   += this.speedY;
+            this.x   += this.speedX + Math.sin(this.tick * 0.03 + this.swayOffset) * this.sway;
+            this.rot += this.rotSpeed;
+            if (this.y > canvas.height + 40) this.reset();
+        }
+    }
+
+    const petals = Array.from({ length: 38 }, () => new Petal());
+
+    function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        petals.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(loop);
+    }
+    loop();
+})();
 
 // Fermer lightbox avec Echap
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
