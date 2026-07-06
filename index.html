@@ -375,15 +375,15 @@ body::after {
 }
 
 
- /* Désactiver l'affichage des boutons de vote */
+ /* Désactiver l'affichage des boutons de vote 
 .btn-vote {
     display: none !important;
 } 
 
-/* Optionnel : masquer aussi les infos de prix en haut */
+/* Optionnel : masquer aussi les infos de prix en haut 
 .vote-info {
     display: none !important;
-} 
+} */
 
 /* ===== ESPACE COMMENTAIRES ===== */
 /* ===== BOUTON FLOTTANT COMMENTAIRES ===== */
@@ -1008,8 +1008,15 @@ async function soumettreDemande(nb, mont) {
                     <button class="btn-main" onclick="closeModal('modal-vote')">Fermer</button>
                 </div>
             `;
-            currentVoter.a_paye_premier_vote = true;
-            localStorage.setItem('miss_voter', JSON.stringify(currentVoter));
+            
+        } else if (r.status === 404 && data.message === "Votant introuvable") {
+            // Le votant local ne correspond plus à rien en base (ex: reset admin) → reconnexion propre
+            localStorage.removeItem('miss_voter');
+            currentVoter = null;
+            toast("Votre session a expiré, veuillez vous reconnecter.", false);
+            closeModal('modal-vote');
+            document.getElementById('login-for').innerHTML = `Vote pour <b>${targetCand.nom}</b>`;
+            openModal('modal-login');
         } else {
             toast(data.message || "Erreur lors de l'envoi.", false);
         }
