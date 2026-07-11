@@ -460,6 +460,72 @@ body::after {
 .comment-item-mini .c-msg { font-size: 12px; color: var(--text); line-height: 1.4; word-break: break-word; }
 .comment-item-mini .c-date { font-size: 9.5px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
     
+
+
+
+
+
+
+
+
+
+
+/* ===== COMPTE À REBOURS ===== */
+.countdown-wrap {
+    display: inline-block;
+    padding: 18px 30px;
+    border-radius: 24px;
+    margin: 25px auto 10px;
+    text-align: center;
+}
+.countdown-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+}
+.countdown-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.cd-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 42px;
+}
+.cd-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold2);
+    line-height: 1;
+}
+.cd-unit {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 4px;
+}
+.cd-sep {
+    font-size: 22px;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 14px;
+}
+.countdown-ended {
+    font-size: 14px;
+    color: var(--gold2);
+    font-weight: 600;
+}
+@media (max-width: 600px) {
+    .cd-num { font-size: 22px; }
+    .cd-block { min-width: 34px; }
+}
     </style>
 </head>
 <body>
@@ -531,6 +597,25 @@ body::after {
     <h1>2nd edition</h1>
     <p class="hero-sub" style="color: var(--muted); max-width: 500px; margin: 15px auto; font-size: 14px; line-height: 1.6;">L'élégance est la seule beauté qui ne se fane jamais. Soutenez votre favorite vers le trône.</p>
     <div class="gold-line"></div>
+
+
+    <div class="countdown-wrap glass-btn" id="countdown-wrap">
+    <p class="countdown-label">Fin des votes dans</p>
+    <div class="countdown-timer" id="countdown-timer">
+        <div class="cd-block"><span class="cd-num" id="cd-days">00</span><span class="cd-unit">Jours</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><span class="cd-num" id="cd-hours">00</span><span class="cd-unit">Heures</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><span class="cd-num" id="cd-mins">00</span><span class="cd-unit">Min</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><span class="cd-num" id="cd-secs">00</span><span class="cd-unit">Sec</span></div>
+    </div>
+    <p class="countdown-ended" id="countdown-ended" style="display:none;">🎉 Les votes sont ouverts !</p>
+</div>
+
+
+
+
     <div class="vote-info glass-btn">
         <span><b style="color:var(--gold)">OR</b> Premier vote : 100 FCFA</span>
         <span style="opacity: 0.3">|</span>
@@ -590,6 +675,41 @@ body::after {
 <div class="toast-container" id="toasts" style="position:fixed; bottom:20px; right:20px; z-index:5000;"></div>
 
 <script>
+
+
+
+// ==========================================
+// COMPTE À REBOURS — MODIFIE LA DATE ICI
+// Format : "AAAA-MM-JJTHH:MM:SS"
+// ==========================================
+const COUNTDOWN_TARGET = new Date("2026-07-12T23:59:59").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = COUNTDOWN_TARGET - now;
+
+    if (distance <= 0) {
+        document.getElementById('countdown-timer').style.display = 'none';
+        document.getElementById('countdown-ended').style.display = 'block';
+        clearInterval(countdownInterval);
+        return;
+    }
+
+    const days  = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const secs  = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('cd-days').textContent  = String(days).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2, '0');
+    document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
+}
+
+updateCountdown();
+const countdownInterval = setInterval(updateCountdown, 1000);
+
+
 // ==========================================
 // CONFIG & STATE
 // ==========================================
