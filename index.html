@@ -375,6 +375,132 @@ body::after {
 }
 
 
+/* ===== BANNIÈRE PUBLICITAIRE (OVERLAY) ===== */
+body.ad-active {
+    overflow: hidden;
+}
+body.ad-active > *:not(#ad-overlay) {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.3s ease;
+}
+
+#ad-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    animation: adFadeIn 0.35s ease forwards;
+}
+
+@keyframes adFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.ad-box {
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    max-height: 85vh;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--gold);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(249,33,209,0.15);
+    background: #111;
+    animation: adPopIn 0.4s cubic-bezier(.2,.8,.3,1.2) forwards;
+}
+
+@keyframes adPopIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.ad-box a.ad-link {
+    display: block;
+    cursor: pointer;
+}
+
+
+.ad-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.35);
+    backdrop-filter: blur(6px);
+    color: rgba(255,255,255,0.85);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 100px;
+    z-index: 2;
+}
+
+@media (max-width: 600px) {
+    .ad-badge { font-size: 9px; padding: 5px 10px; top: 10px; left: 10px; }
+}
+
+.ad-box img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 85vh;
+    object-fit: cover;
+}
+
+.ad-text-bottom {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 18px 55px 16px 18px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+    text-align: left;
+}
+.ad-text-bottom .ad-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gold2);
+    margin-bottom: 4px;
+}
+.ad-text-bottom .ad-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+}
+
+.ad-close {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.35);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    z-index: 2;
+    transition: transform 0.2s, background 0.2s;
+}
+.ad-close:hover { background: var(--gold); color: #000; transform: rotate(90deg); }
+.ad-close svg { width: 18px; height: 18px; }
+
+@media (max-width: 600px) {
+    .ad-box { max-height: 78vh; border-radius: 16px; }
+    .ad-close { width: 42px; height: 42px; top: 10px; right: 10px; }
+    .ad-text-bottom { padding: 14px 50px 14px 14px; }
+    .ad-text-bottom .ad-title { font-size: 17px; }
+    .ad-text-bottom .ad-sub { font-size: 11px; }
+}
+
  /* Désactiver l'affichage des boutons de vote 
 .btn-vote {
     display: none !important;
@@ -529,6 +655,30 @@ body::after {
     </style>
 </head>
 <body>
+
+
+
+    <!-- ===== BANNIÈRE PUBLICITAIRE ===== -->
+<div id="ad-overlay">
+    <div class="ad-box">
+        <button class="ad-close" onclick="fermerPub()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <span class="ad-badge">Espace Pub</span>
+        <a id="ad-link" class="ad-link" href="#" target="_blank" rel="noopener">
+            <img id="ad-image" src="" alt="Publicité">
+            <div class="ad-text-bottom">
+                <div class="ad-title" id="ad-title"></div>
+                <div class="ad-sub" id="ad-sub"></div>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+
 
     <canvas id="petal-canvas" style="position:fixed; inset:0; z-index:0; pointer-events:none;"></canvas>
 
@@ -1335,6 +1485,53 @@ async function posterCommentaire() {
 
 // Fermer lightbox avec Echap
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+
+
+
+// ==========================================
+// BANNIÈRE PUBLICITAIRE — plusieurs pubs, choix aléatoire à chaque chargement
+// ==========================================
+
+// 👉 Ajoute/modifie tes pubs ici (autant que tu veux)
+const PUBS = [
+    {
+        image: "https://i.postimg.cc/rmFKMHmK/IMG-6767.png",
+        lien: "https://chat.whatsapp.com/GyWuosvLbpjGZfCxXNwYMw?s=cl&p=i&ilr=4&amv=2",
+        titre: "STRANGER MOOD collection",
+        sous_titre: ""
+    },
+    {
+        image: "https://i.postimg.cc/PJB0Z77k/IMG-4457.jpg",
+        lien: "https://polajoy.vercel.app/",
+        titre: "POLAJOY",
+        sous_titre: ""
+    }
+];
+
+function afficherPub() {
+    const pub = PUBS[Math.floor(Math.random() * PUBS.length)];
+
+    document.getElementById('ad-image').src   = pub.image;
+    document.getElementById('ad-link').href   = pub.lien;
+    document.getElementById('ad-title').textContent = pub.titre;
+    document.getElementById('ad-sub').textContent   = pub.sous_titre;
+
+    document.body.classList.add('ad-active');
+}
+
+function fermerPub() {
+    document.body.classList.remove('ad-active');
+    const overlay = document.getElementById('ad-overlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 300);
+}
+
+afficherPub(); // s'exécute dès le chargement de la page
+
+
+
+
 </script>
 
 <style>
