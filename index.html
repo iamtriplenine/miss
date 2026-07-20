@@ -501,15 +501,15 @@ body.ad-active > *:not(#ad-overlay) {
     .ad-text-bottom .ad-sub { font-size: 11px; }
 }
 
- /* Désactiver l'affichage des boutons de vote 
+ /* Désactiver l'affichage des boutons de vote */
 .btn-vote {
     display: none !important;
 } 
 
-/* Optionnel : masquer aussi les infos de prix en haut 
+/* Optionnel : masquer aussi les infos de prix en haut */
 .vote-info {
     display: none !important;
-} */
+} 
 
 /* ===== ESPACE COMMENTAIRES ===== */
 /* ===== BOUTON FLOTTANT COMMENTAIRES ===== */
@@ -750,7 +750,7 @@ body.ad-active > *:not(#ad-overlay) {
 
 
     <div class="countdown-wrap glass-btn" id="countdown-wrap">
-    <p class="countdown-label">Fin de la deuxième manche</p>
+    <p class="countdown-label">Debut de la troixième manche</p>
     <div class="countdown-timer" id="countdown-timer">
         <div class="cd-block"><span class="cd-num" id="cd-days">00</span><span class="cd-unit">Jours</span></div>
         <div class="cd-sep">:</div>
@@ -832,7 +832,7 @@ body.ad-active > *:not(#ad-overlay) {
 // COMPTE À REBOURS — MODIFIE LA DATE ICI
 // Format : "AAAA-MM-JJTHH:MM:SS"
 // ==========================================
-const COUNTDOWN_TARGET = new Date("2026-07-19T23:59:59").getTime();
+const COUNTDOWN_TARGET = new Date("2026-07-21T23:59:59").getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
